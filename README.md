@@ -3,6 +3,7 @@
 ## Install
 ### Install Packages
 ```sh
+poetry env use 3.8
 poetry install
 ```
 
@@ -12,6 +13,7 @@ sudo apt install -y libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 li
 ```
 
 ## Structure
+```
 your_app/
 ├── main.py                   # アプリケーションのエントリーポイント
 ├── handlers/                 # @eel.exposeされた関数群
@@ -26,3 +28,4 @@ your_app/
 │       └── index.html
 └── data/                     # 永続化データ
     └── state.json
+```
