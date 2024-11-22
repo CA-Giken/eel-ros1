@@ -29,3 +29,4 @@ your_app/
 └── data/                     # 永続化データ
     └── state.json
 ```
+![Architecture](docs/architecture.png)
