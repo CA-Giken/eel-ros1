@@ -1,32 +1,20 @@
-# Eel Example App
+# Rviz カメラ操作・視点登録
 
-## Install
-### Install Packages
+# Installation
+
+```
+cd ~/catkin_ws/src
+git clone https://github.com/CA-Giken/eel-example.git
+cd ~/catkin_ws
+
+pip install eel[jinja2]
+
+catkin build
+```
+
+# Run
+
 ```sh
-poetry env use 3.8
-poetry install
+source ~/catkin_ws/devel/setup.bash
+roslaunch eel_example main.launch
 ```
-
-### Install Chronium
-```sh
-sudo apt install -y libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libgbm-dev fonts-ipafont
-```
-
-## Structure
-```
-your_app/
-├── main.py                   # アプリケーションのエントリーポイント
-├── handlers/                 # @eel.exposeされた関数群
-├── services/                 # サービス群
-├── utils/                    # Pythonユーティリティ
-├── templates/                # HTMLテンプレート
-│   └── index.html            # エントリーポイント
-|   └── components/           # コンポーネント群
-|       └── header.html
-├── dist/                     # 生成コード
-│   └── web/
-│       └── index.html
-└── data/                     # 永続化データ
-    └── state.json
-```
-![Architecture](docs/architecture.png)

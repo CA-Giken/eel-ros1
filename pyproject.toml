@@ -1,18 +1,13 @@
 [tool.poetry]
-name = "eel-example"
-version = "0.1.0"
-description = "Eel Python GUI App example"
-authors = ["HiraiKyo <kyo.mikhael@gmail.com>"]
-license = "MIT"
-readme = "README.md"
+name = "eel_example"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.8"
 typing-extensions = "^4.12.2"
 eel = {extras = ["jinja2"], version = "^0.18.0"}
 pyyaml = "^6.0.2"
+roslibpy = "^1.8.0"
 
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.group.dev.dependencies]
+taskipy = "^1.14.0"
