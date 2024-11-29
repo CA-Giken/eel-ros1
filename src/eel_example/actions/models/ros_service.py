@@ -4,6 +4,7 @@ import rospy
 import eel
 import threading
 import time
+from std_msgs.msg import String
 
 ##### Parameterブロック
 
@@ -65,7 +66,11 @@ except Exception as e:
     print("[CA] get_param exception:", e.args)
 
 # Subscribers
+def callback_health(msg):
+    value = eel.health(msg.data)
+    print("[CA] Python -> JS: OK, ", value)
 
+rospy.Subscriber(f'{Config["package_name"]}/health', String, callback_health)
 # Publishers
 
 # rospy.Timer(rospy.Duration(1), cb_scan, oneshot=True)

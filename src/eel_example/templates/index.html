@@ -67,6 +67,13 @@
       </div>
     </div>
 
+    <dev class="container">
+      <div class="component">
+        <h2>ROS Publishers</h2>
+        {% with name="/eel_pubtest/string", value="test" %} {% include
+          "components/publishers/String.html" %} {% endwith %}
+      </div>
+    </dev>
     <script type="text/javascript" src="/eel.js"></script>
     {% include 'components/scripts.html' %}
   </body>
