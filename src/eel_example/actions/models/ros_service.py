@@ -10,6 +10,7 @@ from std_msgs.msg import String
 
 Config = {
     "package_name": "eel_example",
+    "log_level": "info" # debug | info | warn | error
 }
 
 ##### Functionブロック

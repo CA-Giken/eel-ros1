@@ -22,46 +22,55 @@
     <div class="container">
       <div class="component">
         <h2>Bool</h2>
+        <h3>/eel_subtest/bool</h3>
         {% with name="/eel_subtest/bool" %} {% include
         "components/subscribers/Bool.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>Int32</h2>
+        <h3>/eel_subtest/int32</h3>
         {% with name="/eel_subtest/int32" %} {% include
         "components/subscribers/Int32.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>Int64</h2>
+        <h3>/eel_subtest/int64</h3>
         {% with name="/eel_subtest/int64" %} {% include
         "components/subscribers/Int64.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>Float32</h2>
+        <h3>/eel_subtest/float32</h3>
         {% with name="/eel_subtest/float32" %} {% include
         "components/subscribers/Float32.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>Float64</h2>
+        <h3>/eel_subtest/float64</h3>
         {% with name="/eel_subtest/float64" %} {% include
         "components/subscribers/Float64.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>String</h2>
+        <h3>/eel_subtest/string</h3>
         {% with name="/eel_subtest/string" %} {% include
         "components/subscribers/String.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>Transform</h2>
+        <h3>/eel_subtest/transform</h3>
         {% with name="/eel_subtest/transform" %} {% include
         "components/subscribers/Transform.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>Pose</h2>
+        <h3>/eel_subtest/pose</h3>
         {% with name="/eel_subtest/pose" %} {% include
         "components/subscribers/Pose.html" %} {% endwith %}
       </div>
       <div class="component">
         <h2>Image</h2>
+        <h3>/eel_subtest/image</h3>
         {% with name="/eel_subtest/image" %} {% include
         "components/subscribers/Image.html" %} {% endwith %}
       </div>
@@ -70,8 +79,22 @@
     <dev class="container">
       <div class="component">
         <h2>ROS Publishers</h2>
-        {% with name="/eel_pubtest/string", value="test" %} {% include
-          "components/publishers/String.html" %} {% endwith %}
+        <div>
+          <h3>/eel_pubtest/bool</h3>
+          {% with name="/eel_pubtest/bool", value="True", label="Publish Bool"
+          %} {% include "components/publishers/Bool.html" %} {% endwith %}
+        </div>
+        <div>
+          <h3>/eel_pubtest/string</h3>
+          {% with name="/eel_pubtest/string", value="test", label="Publish
+          String" %} {% include "components/publishers/String.html" %} {%
+          endwith %}
+        </div>
+        <div>
+          <h3>/eel_pubtest/int32</h3>
+          {% with name="/eel_pubtest/int32", value="123", label="Publish Int32"
+          %} {% include "components/publishers/Int32.html" %} {% endwith %}
+        </div>
       </div>
     </dev>
     <script type="text/javascript" src="/eel.js"></script>

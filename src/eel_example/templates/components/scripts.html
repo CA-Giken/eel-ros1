@@ -17,11 +17,11 @@
     String: "String:std_msgs",
     Transform: "Transform:geometry_msgs",
     Pose: "Pose:geometry_msgs",
-    Image: "Image:sensor_mags"
-  }
+    Image: "Image:sensor_mags",
+  };
 
   /** ROS PUBLISHER */
-  console.log("publisher")
+  console.log("publisher");
   const publishButtons = document.getElementsByClassName("publish");
   console.log(publishButtons);
   for (const btn of publishButtons) {
@@ -34,7 +34,7 @@
       const rostopic_name = btn.getAttribute("name");
       const type = btn.getAttribute("type");
       const value = btn.getAttribute("value");
-      console.log(rostopic_name, type, value)
+      console.log(rostopic_name, type, value);
       eel.ros_publish(rostopic_name, type, value);
     });
   }
@@ -46,13 +46,12 @@
   for (const element of subscribeElements) {
     const topic_name = element.getAttribute("name");
     const type = element.getAttribute("type");
-    console.log(topic_name, type)
     eel.ros_subscribe(topic_name, type);
   }
 
-  eel.expose(updateSubscribedValue)
-  function updateSubscribedValue(topicName, type, value) { 
-    console.log(topicName, type, value)
+  eel.expose(updateSubscribedValue);
+  function updateSubscribedValue(topicName, type, value) {
+    // console.log(topicName, type, value);
     const topicElements = document.getElementsByName(topicName);
     for (const element of topicElements) {
       switch (type) {
@@ -96,19 +95,19 @@
           break;
         default:
           console.error("Unexpected ROS Message type:", type);
-          console.log(MSG_TYPES.String)
           break;
       }
     }
-  };
+  }
 
   /** ROSPARAM SETTER */
   const paramInputs = document.getElementsByClassName("param");
   for (const input of paramInputs) {
     input.addEventListener("blur", async (e) => {
-      const param_name = input.getAttribute("name");
-      const param_value = input.getAttribute("value");
-      eel.ros_set_param(param_name, param_value);
+      const name = input.getAttribute("name");
+      const type = input.getAttribute("type");
+      const value = input.getAttribute("value");
+      eel.ros_set_param(name, type, value);
     });
   }
 
@@ -124,7 +123,7 @@
     for (const input of targetInputs) {
       input.getAttribute("value").value = param_value;
     }
-  };
+  }
 
   // Health check to notify successful js runtime.
   eel.expose(health);

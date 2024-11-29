@@ -3,7 +3,8 @@ import eel
 import rospy
 
 from eel_example.actions.models.ros_wrapper import to_msg, from_msg, MSG_TYPES, publisher, subscriber
-from eel_example.actions.models.ros_service import pubs, subs
+from eel_example.actions.models.ros_service import pubs, subs, Config
+from eel_example.actions.models.rosparam import PARAM_TYPES
 
 @eel.expose
 def health(value):
@@ -27,18 +28,23 @@ def ros_publish(topic_name: str, type: str, value: str):
     # TODO: PublisherのLifetimeをどうするか？
 
 @eel.expose
-def ros_set_param(param_name: str, param_value):
+def ros_set_param(param_name: str, type: str, param_value):
+    assert type in PARAM_TYPES.keys(), f"[CA] Invalid ROSParam type: {type}. Available types: {PARAM_TYPES.keys()}"
+    
     rospy.set_param(param_name, param_value)
     print("[CA] Rosparam set: ", param_name, param_value)
 
 @eel.expose
 def ros_subscribe(topic_name: str, type: str):
-    print(topic_name, type)
     assert type in MSG_TYPES.keys(), f"[CA] Invalid message type: {type}. Available types: {MSG_TYPES.keys()}"
     assert topic_name.startswith('/'), f"[CA] Invalid topic name: {topic_name}. Must starts with '/"
 
     def callback(value):
-        print("[CA]", topic_name, MSG_TYPES[type], value)
+        if Config["log_level"] == "debug":
+            print("[CA]", topic_name, MSG_TYPES[type], value)
+        # if type == "Image":
+        #     print("Image")
+        #     return
         eel.updateSubscribedValue(topic_name, MSG_TYPES[type], from_msg(MSG_TYPES[type], value))
 
     if topic_name in subs.keys():

@@ -20,7 +20,7 @@ MSG_TYPES = {
     "Pose": 'Pose:geometry_msgs',
     "Image": 'Image:sensor_mags'
 }
-def publisher(topic_name: str, type: MSG_TYPES, **options):
+def publisher(topic_name: str, type: str, **options):
     if type == MSG_TYPES["Bool"]:
         pub = rospy.Publisher(topic_name, Bool, **options)
     elif type == MSG_TYPES["Int32"]:
@@ -111,9 +111,9 @@ def from_msg(type: str, msg: str):
     return value
 
 def to_bool_msg(value: str) -> Bool:
-    if value == 'true':
+    if value == 'True':
         return True
-    elif value == 'false':
+    elif value == 'False':
         return False
     else:
         raise ValueError(f"[CA] Invalid value: {value}. Must be 'true' or 'false'.")

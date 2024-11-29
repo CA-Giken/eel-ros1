@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include 'components/styles.html' %}
+  </head>
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .component {
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+
+  <body style="font-family: Arial, sans-serif; margin: 0; padding: 0">
+    <h1>panel.py:RTK_TOOLS 代用テスト</h1>
+    <div class="container">
+      <div class="component">
+        クロップ距離<input
+          class="rosparam"
+          type="Number"
+          name="/config/vcam/wd"
+          value="default"
+        />
+      </div>
+      <div class="component">
+        マスター<button
+          class="publish"
+          type="Bool"
+          name="/request/model_save"
+          value="True"
+        >
+          登録
+        </button>
+      </div>
+      <div class="component">
+        カウント {% with name="/rcalib/count" %} {% include
+        "components/subscribers/Int32.html" %} {% endwith %}
+      </div>
+      <div class="component">
+        カウント<button
+          class="publish"
+          type="Bool"
+          name="/request/clear"
+          value="True"
+        >
+          リセット
+        </button>
+      </div>
+      <div class="component">
+        取り込み<button
+          class="publish"
+          type="Bool"
+          name="/request/capture"
+          value="True"
+        >
+          する
+        </button>
+      </div>
+      <div class="component">
+        {% with name="/camera/image" %} {% include
+        "components/subscribers/Image.html" %} {% endwith %}
+      </div>
+    </div>
+    <script type="text/javascript" src="/eel.js"></script>
+    {% include 'components/scripts.html' %}
+  </body>
+</html>
