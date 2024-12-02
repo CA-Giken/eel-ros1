@@ -1,12 +1,9 @@
 <!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
-  <head>
-    {% include 'components/styles.html' %}
-  </head>
-  <body style="font-family: Arial, sans-serif; margin: 0; padding: 0">
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
+  <body>
     {% include "components/header.html" %}
-    
     <div class="container">
       <div class="component">
         <h2>Bool</h2>
@@ -99,7 +96,7 @@
       </div>
     </div>
     <script type="text/javascript" src="/eel.js"></script>
-    {% include 'components/scripts.html' %}
+    <script type="text/javascript" src="/scripts.js"></script>
     <script type="text/javascript">
       function openTab(evt, tabName) {
         var i, tabcontent, tablinks;

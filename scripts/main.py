@@ -28,13 +28,29 @@ def render_template(template_name, **context):
     with open(os.path.join(package_path, f'dist/web/{template_name}'), 'w', encoding='utf-8') as f:
         f.write(rendered)
 
+def copy_js(js_path):
+    with open(os.path.join(abs_path, js_path), 'r', encoding='utf-8') as f:
+        js = f.read()
+        with open(os.path.join(package_path, f'dist/web/{js_path}'), 'w', encoding='utf-8') as f:
+            f.write(js)
+
+def copy_css(css_path):
+    with open(os.path.join(abs_path, css_path), 'r', encoding='utf-8') as f:
+        css = f.read()
+        with open(os.path.join(package_path, f'dist/web/{css_path}'), 'w', encoding='utf-8') as f:
+            f.write(css)
+
 if __name__ == '__main__':
     # templatesフォルダ直下のHTMLファイルをdist/web/に保存
     files = os.listdir(abs_path)
     for file in files:
         if file.endswith('.html'):
             render_template(file)
-
+        if file.endswith('.js'):
+            copy_js(file)
+        if file.endswith('.css'):
+            copy_css(file)
+        
     options = {
         "host": "0.0.0.0",
         "port": 8000,

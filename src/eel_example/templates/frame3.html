@@ -1,15 +1,13 @@
 <!-- templates/frame.html -->
 <!DOCTYPE html>
 <html>
-  <head>
-    {% include 'components/styles.html' %}
-  </head>
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
   <body>
     <h2>Bool</h2>
     <h3>/eel_subtest/frame3/bool</h3>
     {% with name="/eel_subtest/frame3/bool" %} {% include
     "components/subscribers/Bool.html" %} {% endwith %}
     <script type="text/javascript" src="/eel.js"></script>
-    {% include 'components/scripts.html' %}
+    <script type="text/javascript" src="/scripts.js"></script>
   </body>
 </html>
