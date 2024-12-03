@@ -19,10 +19,11 @@ const MSG_TYPES = {
   Image: "Image:sensor_mags",
 };
 
-/** ROS PUBLISHER */
-console.log("publisher");
+/**
+ * ROS PUBLISHER
+ **/
 const publishButtons = document.getElementsByClassName("publish");
-console.log(publishButtons);
+console.debug("publisher", document.title, publishButtons);
 for (const btn of publishButtons) {
   // PublisherはButtonエレメントにのみ限定する
   if (btn.tagName !== "BUTTON") {
@@ -31,26 +32,26 @@ for (const btn of publishButtons) {
 
   btn.addEventListener("click", async (e) => {
     const rostopic_name = btn.getAttribute("name");
-    const type = btn.getAttribute("type");
+    const type = btn.getAttribute("data-rtype");
     const value = btn.getAttribute("value");
-    console.log(rostopic_name, type, value);
+    console.debug(rostopic_name, type, value);
     eel.ros_publish(rostopic_name, type, value);
   });
 }
 
-/** ROS SUBSCRIBER */
-console.log("subscriber");
+/**
+ * ROS SUBSCRIBER
+ **/
 const subscribeElements = document.getElementsByClassName("subscribe");
-console.log(subscribeElements);
+console.debug("subscriber", document.title, subscribeElements);
 for (const element of subscribeElements) {
   const topic_name = element.getAttribute("name");
-  const type = element.getAttribute("type");
+  const type = element.getAttribute("data-rtype");
   eel.ros_subscribe(topic_name, type);
 }
 
 eel.expose(updateSubscribedValue);
 function updateSubscribedValue(topicName, type, value) {
-  // console.log(topicName, type, value);
   const topicElements = document.getElementsByName(topicName);
   for (const element of topicElements) {
     switch (type) {
@@ -93,41 +94,78 @@ function updateSubscribedValue(topicName, type, value) {
         img.src = "data:image/jpeg;base64," + value;
         break;
       default:
-        console.error("Unexpected ROS Message type:", type);
+        console.error("[CA] Unexpected ROS Message type:", type);
         break;
     }
   }
 }
 
-/** ROSPARAM SETTER */
-const paramInputs = document.getElementsByClassName("param");
+/**
+ * ROS Parameters
+ **/
+const paramInputs = document.getElementsByClassName("rosparam");
+console.debug("params", document.title, paramInputs);
 for (const input of paramInputs) {
+  eel.ros_register_param(input.getAttribute("name"), input.getAttribute("data-rtype"));
+}
+for (const input of paramInputs) {
+  if(input.getAttribute("type") === "checkbox"){
+    input.addEventListener("change", async (e) => {
+      const name = input.getAttribute("name");
+      const type = input.getAttribute("data-rtype");
+      const value = input.checked;
+      console.debug(name, type, value);
+      eel.ros_set_param(name, type, value);
+    });
+    continue;
+  }
+  /** ROSPARAM SETTER */
   input.addEventListener("blur", async (e) => {
     const name = input.getAttribute("name");
-    const type = input.getAttribute("type");
+    const type = input.getAttribute("data-rtype");
     const value = input.getAttribute("value");
+    console.debug(name, type, value);
     eel.ros_set_param(name, type, value);
   });
 }
 
 /** ROSPARAM GETTER */
 eel.expose(updateParam);
-function updateParam(param_name, param_value) {
-  if (typeof param_value != "string") {
-    throw Error(
-      `[CA] Rosparam input view only accepts string, received ${typeof param_value}`
-    );
-  }
-  targetInputs = document.getElementByName(param_name);
+function updateParam(param_name, value) {
+  console.log("[CA] updateParam", param_name, value);
+  targetInputs = document.getElementsByName(param_name);
+  console.debug("targetInputs", targetInputs);
   for (const input of targetInputs) {
-    input.getAttribute("value").value = param_value;
+    if (typeof value == "string") {
+      input.value = value;
+    } else if (typeof value == "boolean") {
+      input.checked = value;
+    } else if (typeof value == "number") {
+      input.value = value;
+    } else {
+      console.error(
+        `[CA] Rosparam input view only accepts string, boolean, number: received ${typeof value}`
+      );
+    }
   }
 }
+
+/**
+ * Unregister all events on onload page.
+ **/
+window.addEventListener("unload", async (e) => {
+  for (const input of paramInputs) {
+    eel.ros_unregister_param(input.getAttribute("name"));
+  }
+  for (const element of subscribeElements) {
+    eel.ros_unsubscribe(element.getAttribute("name"));
+  }
+});
 
 // Health check to notify successful js runtime.
 eel.expose(health);
 function health(value) {
   console.log("[CA] Python -> JS: OK");
-  return value;
+  return document.title + ": " + value;
 }
 eel.health("success");

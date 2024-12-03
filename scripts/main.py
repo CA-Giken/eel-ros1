@@ -2,20 +2,21 @@
 # mypy: ignore-errors
 
 import os
+import sys
 import eel
 from jinja2 import Environment, FileSystemLoader
 import rospkg
 
 # Actionsをインポートして、このファイルにバンドルする
 from eel_example.actions.actions import *  # noqa: F403
-from eel_example.actions.models import ros_service
+from eel_example.actions.models import ros_service, rosparam
 
 Config = ros_service.Config
 
 # Jinja2の設定
 rospack = rospkg.RosPack()
 package_path = rospack.get_path(Config['package_name'])
-abs_path = os.path.join(package_path, f'src/{Config["package_name"]}/templates')
+abs_path = os.path.join(package_path, Config["html_path"])
 os.makedirs(os.path.join(package_path, 'dist/web'), exist_ok=True)
 env = Environment(loader=FileSystemLoader(abs_path))
 
@@ -55,12 +56,18 @@ if __name__ == '__main__':
         "host": "0.0.0.0",
         "port": 8000,
         'cmdline_args': ["--no-sandbox"],
-        'size': (800, 600)
+        'size': (800, 600),
+        # "block": False
     }
     dist_path = os.path.join(package_path, 'dist/web')
     print("Starting Eel app...")
     print("  dist path: ", dist_path)
-    print("  hosted at:", f"http://localhost:{options['port']}")
+    print("  hosted at:", f"http://{options['host']}:{options['port']}")
     eel.init(dist_path)
-    eel.start('index.html', **options)
-    print("[CA] App quitted.")
+    try:
+        rosparam.run_getparam_loop()
+        eel.start('index.html', **options)
+    except KeyboardInterrupt:
+        rosparam.break_getparam_loop()
+        print("[CA] App quitted.")
+        sys.exit()

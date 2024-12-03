@@ -43,7 +43,7 @@ def publisher(topic_name: str, type: str, **options):
         raise ValueError("[CA] Unexpected ROS Message type: ", type)
     return pub
 
-def subscriber(topic_name: str, type: MSG_TYPES, callback):
+def subscriber(topic_name: str, type: str, callback):
     if type == MSG_TYPES["Bool"]:
         sub = rospy.Subscriber(topic_name, Bool, callback)
     elif type == MSG_TYPES["Int32"]:

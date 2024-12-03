@@ -1,1 +1,4 @@
-config:
+eel_paramtest:
+  bool: true
+  number: 42
+  string: "Eel rosparam test"
