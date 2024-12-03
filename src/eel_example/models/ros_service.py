@@ -8,12 +8,11 @@ from std_msgs.msg import String
 Config = {
     "package_name": "eel_example",
     "log_level": "info", # debug | info | warn | error
-    "html_path": "src/eel_example/templates",
 }
 
 ##### Functionブロック
-pubs = {} # { "/topic_name": publisher }
-subs = {} # { "/topic_name": subscriber }
+pubs = {} # { "/topic_name": { "publisher": rospy.Publisher, "last_value": value } }
+subs = {} # { "/topic_name": { "subscriber": rospy.Subscriber, "last_value": value } }
 
 ##### Mainブロック
 rospy.init_node(Config["package_name"], anonymous = True)

@@ -168,4 +168,4 @@ function health(value) {
   console.log("[CA] Python -> JS: OK");
   return document.title + ": " + value;
 }
-eel.health("success");
+eel.health(document.title);

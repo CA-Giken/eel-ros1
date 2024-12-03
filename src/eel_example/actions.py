@@ -2,13 +2,13 @@
 import eel
 import rospy
 
-from eel_example.actions.models.ros_wrapper import to_msg, from_msg, MSG_TYPES, publisher, subscriber
-from eel_example.actions.models.ros_service import pubs, subs, Config
-from eel_example.actions.models.rosparam import PARAM_TYPES, rosparams
+from eel_example.models.ros_wrapper import to_msg, from_msg, MSG_TYPES, publisher, subscriber
+from eel_example.models.ros_service import pubs, subs, Config
+from eel_example.models.rosparam import PARAM_TYPES, rosparams
 
 @eel.expose
 def health(value):
-    print("[CA] JS->Python: OK")
+    print("[CA] JS->Python: OK", value)
     return value
 
 @eel.expose
@@ -19,11 +19,15 @@ def ros_publish(topic_name: str, typ: str, value: str):
     if topic_name in pubs.keys():
         pub = pubs[topic_name]
     else:
-        pub = publisher(topic_name, MSG_TYPES[typ], queue_size=1)
-        pubs[topic_name] = pub
+        pubs[topic_name] = {
+            "publisher": publisher(topic_name, MSG_TYPES[typ], queue_size=1),
+            "last_value": None
+        }
+        pub = pubs[topic_name]
 
     msg = to_msg(MSG_TYPES[typ], value)
-    pub.publish(msg)
+    pub["publisher"].publish(msg)
+    pub["last_value"] = value
     print("[CA] Published:", topic_name, MSG_TYPES[typ], value)
     # TODO: PublisherのLifetimeをどうするか？
 
@@ -35,18 +39,17 @@ def ros_subscribe(topic_name: str, typ: str):
     def callback(value):
         if Config["log_level"] == "debug":
             print("[CA]", topic_name, MSG_TYPES[typ], value)
-        # if type == "Image":
-        #     print("Image")
-        #     return
         eel.updateSubscribedValue(topic_name, MSG_TYPES[typ], from_msg(MSG_TYPES[type], value))
-
+        subs[topic_name]["last_value"] = value
     if topic_name in subs.keys():
         sub = subs[topic_name]
     else:
-        sub = subscriber(topic_name, MSG_TYPES[typ], callback)
-        subs[topic_name] = sub
+        subs[topic_name] = {
+            "subscriber": subscriber(topic_name, MSG_TYPES[typ], callback),
+            "last_value": None
+        }
+        sub = subs[topic_name]
         print("[CA] Subscriber:", topic_name, MSG_TYPES[typ])
-    # TODO: SubscriberのLifetimeをどうするか？
 
 @eel.expose
 def ros_unsubscribe(topic_name: str):

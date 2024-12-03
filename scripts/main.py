@@ -6,19 +6,26 @@ import sys
 import eel
 from jinja2 import Environment, FileSystemLoader
 import rospkg
+import argparse
 
 # Actionsをインポートして、このファイルにバンドルする
-from eel_example.actions.actions import *  # noqa: F403
-from eel_example.actions.models import ros_service, rosparam
+from eel_example.actions import *  # noqa: F403
+from eel_example.models import ros_service, rosparam
 
 Config = ros_service.Config
 
 # Jinja2の設定
 rospack = rospkg.RosPack()
 package_path = rospack.get_path(Config['package_name'])
-abs_path = os.path.join(package_path, Config["html_path"])
+abs_path = os.path.join(package_path, 'templates')
 os.makedirs(os.path.join(package_path, 'dist/web'), exist_ok=True)
 env = Environment(loader=FileSystemLoader(abs_path))
+
+parser = argparse.ArgumentParser(description="EEL Example")
+parser.add_argument("--html_dir", help="HTML directory path", default=abs_path)
+args = parser.parse_args()
+if args.html_dir:
+    abs_path = args.html_dir
 
 # HTMLのレンダリング関数
 def render_template(template_name, **context):
