@@ -56,7 +56,7 @@ def ros_unsubscribe(topic_name: str):
     assert topic_name in subs.keys(), f"[CA] Invalid topic name: {topic_name}. Not subscribed yet."
 
     try:
-        subs[topic_name].unregister()
+        subs[topic_name]["subscriber"].unregister()
         subs.pop(topic_name)
         print("[CA] Unsubscribed:", topic_name)
     except Exception as e:
