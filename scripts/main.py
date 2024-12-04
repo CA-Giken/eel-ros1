@@ -7,6 +7,7 @@ import eel
 from jinja2 import Environment, FileSystemLoader
 import rospkg
 import argparse
+import rospy
 
 # Actionsをインポートして、このファイルにバンドルする
 from eel_example.actions import *  # noqa: F403
@@ -21,9 +22,11 @@ abs_path = os.path.join(package_path, 'templates')
 os.makedirs(os.path.join(package_path, 'dist/web'), exist_ok=True)
 env = Environment(loader=FileSystemLoader(abs_path))
 
+# コマンドライン引数の処理
+argv = rospy.myargv(argv=sys.argv)
 parser = argparse.ArgumentParser(description="EEL Example")
-parser.add_argument("--html_dir", help="HTML directory path", default=abs_path)
-args = parser.parse_args()
+parser.add_argument("--html_dir", help="HTML directory path")
+args = parser.parse_args(argv[1:])
 if args.html_dir:
     abs_path = args.html_dir
 
