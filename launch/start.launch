@@ -1,4 +1,4 @@
 <launch>
-    <node name="load_params" pkg="eel_example" type="load_config.sh" args="eel_example" output="screen" />
-    <node name="eel_example" pkg="eel_example" type="main.py" output="screen" />
+    <node name="load_params" pkg="eel_ros1" type="load_config.sh" args="eel_ros1" output="screen" />
+    <node name="eel_ros1" pkg="eel_ros1" type="main.py" output="screen" />
 </launch>

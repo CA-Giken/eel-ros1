@@ -10,10 +10,17 @@ import argparse
 import rospy
 
 # Actionsをインポートして、このファイルにバンドルする
-from eel_example.actions import *  # noqa: F403
-from eel_example.models import ros_service, rosparam
+from eel_ros1.actions import *  # noqa: F403
+from eel_ros1.models import ros_service, rosparam
 
 Config = ros_service.Config
+OPTIONS = {
+    "host": "0.0.0.0",
+    "port": 8000,
+    'cmdline_args': ["--no-sandbox"],
+    'size': (800, 600),
+    # "block": False
+}
 
 # Jinja2の設定
 rospack = rospkg.RosPack()
@@ -26,9 +33,12 @@ env = Environment(loader=FileSystemLoader(abs_path))
 argv = rospy.myargv(argv=sys.argv)
 parser = argparse.ArgumentParser(description="EEL Example")
 parser.add_argument("--html_dir", help="HTML directory path")
+parser.add_argument("--port", help="Port number")
 args = parser.parse_args(argv[1:])
 if args.html_dir:
     abs_path = args.html_dir
+if args.port:
+    OPTIONS['port'] = args.port
 
 # HTMLのレンダリング関数
 def render_template(template_name, **context):
@@ -62,22 +72,15 @@ if __name__ == '__main__':
         if file.endswith('.css'):
             copy_css(file)
         
-    options = {
-        "host": "0.0.0.0",
-        "port": 8000,
-        'cmdline_args': ["--no-sandbox"],
-        'size': (800, 600),
-        # "block": False
-    }
+
     dist_path = os.path.join(package_path, 'dist/web')
     print("Starting Eel app...")
     print("  dist path: ", dist_path)
-    print("  hosted at:", f"http://{options['host']}:{options['port']}")
+    print("  hosted at:", f"http://{OPTIONS['host']}:{OPTIONS['port']}")
     eel.init(dist_path)
-    try:
-        rosparam.run_getparam_loop()
-        eel.start('index.html', **options)
-    except KeyboardInterrupt:
-        rosparam.break_getparam_loop()
-        print("[CA] App quitted.")
-        sys.exit()
+    rosparam.run_getparam_loop()
+    eel.start('index.html', **OPTIONS)
+
+    rosparam.break_getparam_loop()
+    print("[CA] App quitted.")
+    sys.exit()
