@@ -11,8 +11,10 @@ import rospy
 
 # Actionsをインポートして、このファイルにバンドルする
 from eel_ros1.actions import *  # noqa: F403
-from eel_ros1.models import ros_service, rosparam
+from eel_ros1.models import ros_service, rosparam # FIXME: おそらくros_serviceのインポートはここ必須
+from eel_bundler.main import bundle
 
+PACKAGE_NAME = "eel_ros1"
 Config = ros_service.Config
 OPTIONS = {
     "host": "0.0.0.0",
@@ -24,10 +26,8 @@ OPTIONS = {
 
 # Jinja2の設定
 rospack = rospkg.RosPack()
-package_path = rospack.get_path(Config['package_name'])
+package_path = rospack.get_path(PACKAGE_NAME)
 abs_path = os.path.join(package_path, 'templates')
-os.makedirs(os.path.join(package_path, 'dist/web'), exist_ok=True)
-env = Environment(loader=FileSystemLoader(abs_path))
 
 # コマンドライン引数の処理
 argv = rospy.myargv(argv=sys.argv)
@@ -40,40 +40,8 @@ if args.html_dir:
 if args.port:
     OPTIONS['port'] = args.port
 
-# HTMLのレンダリング関数
-def render_template(template_name, **context):
-    template = env.get_template(template_name)
-    rendered = template.render(**context)
-
-    # 生成したHTMLをdist/web/フォルダに保存
-    with open(os.path.join(package_path, f'dist/web/{template_name}'), 'w', encoding='utf-8') as f:
-        f.write(rendered)
-
-def copy_js(js_path):
-    with open(os.path.join(abs_path, js_path), 'r', encoding='utf-8') as f:
-        js = f.read()
-        with open(os.path.join(package_path, f'dist/web/{js_path}'), 'w', encoding='utf-8') as f:
-            f.write(js)
-
-def copy_css(css_path):
-    with open(os.path.join(abs_path, css_path), 'r', encoding='utf-8') as f:
-        css = f.read()
-        with open(os.path.join(package_path, f'dist/web/{css_path}'), 'w', encoding='utf-8') as f:
-            f.write(css)
-
 if __name__ == '__main__':
-    # templatesフォルダ直下のHTMLファイルをdist/web/に保存
-    files = os.listdir(abs_path)
-    for file in files:
-        if file.endswith('.html'):
-            render_template(file)
-        if file.endswith('.js'):
-            copy_js(file)
-        if file.endswith('.css'):
-            copy_css(file)
-        
-
-    dist_path = os.path.join(package_path, 'dist/web')
+    dist_path = bundle(package_path, template=abs_path)
     print("Starting Eel app...")
     print("  dist path: ", dist_path)
     print("  hosted at:", f"http://{OPTIONS['host']}:{OPTIONS['port']}")

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}デフォルトタイトル{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="/const.js"></script>
+    <script type="text/javascript" src="/dom-helper.js"></script>
+    <script type="text/javascript" src="/ros.js"></script>
+  </head>
+  <body>
+    {% include "components/header.html" %}
+
+    {% block content %}
+    {% endblock %}
+    <script type="text/javascript" src="/scripts.js"></script> <!-- DOM内を走査してイベントをバインドするので最後に必要 -->
+  </body>
+</html>

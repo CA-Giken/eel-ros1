@@ -1,61 +1,57 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>panel.py:RTK_TOOLS 代用テスト</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
-  </head>
-  <body>
-    {% include "components/header.html" %}
-    <h1>panel.py:RTK_TOOLS 代用テスト</h1>
-    <div class="container">
-      <div class="component">
-        クロップ距離<input
-          class="rosparam"
-          data-rtype="Number"
-          name="/config/vcam/wd"
-          value="default"
-        />
-      </div>
-      <div class="component">
-        マスター<button
-          class="publish"
-          data-rtype="Bool"
-          name="/request/model_save"
-          value="True"
-        >
-          登録
-        </button>
-      </div>
-      <div class="component">
-        カウント {% with name="/rcalib/count" %} {% include
-        "components/subscribers/Int32.html" %} {% endwith %}
-      </div>
-      <div class="component">
-        カウント<button
-          class="publish"
-          data-rtype="Bool"
-          name="/request/clear"
-          value="True"
-        >
-          リセット
-        </button>
-      </div>
-      <div class="component">
-        取り込み<button
-          class="publish"
-          data-rtype="Bool"
-          name="/request/capture"
-          value="True"
-        >
-          する
-        </button>
-      </div>
-      <div class="component">
-        {% with name="/camera/image" %} {% include
-        "components/subscribers/Image.html" %} {% endwith %}
-      </div>
-    </div>
-    <script type="text/javascript" src="/eel.js"></script>
-    <script type="text/javascript" src="/scripts.js"></script>
-  </body>
-</html>
+{% extends "components/base.html" %}
+
+{% block title %}
+    panel.py:RTK_TOOLS 代用テスト
+{% endblock %}
+
+{% block content %}
+<h1>panel.py:RTK_TOOLS 代用テスト</h1>
+<div class="container">
+  <div class="component">
+    クロップ距離<input
+      class="rosparam"
+      data-rtype="Number"
+      name="/config/vcam/wd"
+      value="default"
+    />
+  </div>
+  <div class="component">
+    マスター<button
+      class="publish"
+      data-rtype="Bool"
+      name="/request/model_save"
+      value="True"
+    >
+      登録
+    </button>
+  </div>
+  <div class="component">
+    カウント {% with name="/rcalib/count" %} {% include
+    "components/subscribers/Int32.html" %} {% endwith %}
+  </div>
+  <div class="component">
+    カウント<button
+      class="publish"
+      data-rtype="Bool"
+      name="/request/clear"
+      value="True"
+    >
+      リセット
+    </button>
+  </div>
+  <div class="component">
+    取り込み<button
+      class="publish"
+      data-rtype="Bool"
+      name="/request/capture"
+      value="True"
+    >
+      する
+    </button>
+  </div>
+  <div class="component">
+    {% with name="/camera/image" %} {% include
+    "components/subscribers/Image.html" %} {% endwith %}
+  </div>
+</div>
+{% endblock %}
