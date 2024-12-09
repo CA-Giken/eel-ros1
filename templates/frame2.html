@@ -1,16 +1,13 @@
-<!-- templates/frame.html -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Frame2</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
-  </head>
-  <body>
+{% extends "components/base.html" %}
+
+{% block title %}
+    Frame2
+{% endblock %}
+
+{% block content %}
     <h2>Bool</h2>
     <h3>/eel_subtest/frame2/bool</h3>
-    {% with name="/eel_subtest/frame2/bool" %} {% include
-    "components/subscribers/Bool.html" %} {% endwith %}
-    <script type="text/javascript" src="/eel.js"></script>
-    <script type="text/javascript" src="/scripts.js"></script>
-  </body>
-</html>
+    {% with name="/eel_subtest/frame2/bool" %}
+      {% include "components/subscribers/Bool.html" %}
+    {% endwith %}
+{% endblock %}

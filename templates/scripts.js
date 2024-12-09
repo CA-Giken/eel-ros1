@@ -1,41 +1,64 @@
-const MSG_TYPES = {
-  // Bool = "Bool";
-  // Int32 = "Int32";
-  // Int64 = "Int64";
-  // Float32 = "Float32";
-  // Float64 = "Float64";
-  // String = "String";
-  // Transform = "Transform";
-  // Pose = "Pose";
-  // Image = "Image";
-  Bool: "Bool:std_msgs",
-  Int32: "Int32:std_msgs",
-  Int64: "Int64:std_msgs",
-  Float32: "Float32:std_msgs",
-  Float64: "Float64:std_msgs",
-  String: "String:std_msgs",
-  Transform: "Transform:geometry_msgs",
-  Pose: "Pose:geometry_msgs",
-  Image: "Image:sensor_mags",
-};
+/**
+ * DOM Default UpdateCallback
+ */
+function updateDOM(element, value) {
+  switch (typeof value) {
+    case "boolean":
+      element.checked = value;
+      break;
+    case "number":
+      if (element.tagName === "INPUT") {
+        element.value = value;
+        break;
+      }
+      element.innerText = value;
+      break;
+    case "string":
+      if (value.startsWith("data:image")) {
+        element.src = value;
+        break;
+      }
+      if (element.tagName === "INPUT") {
+        element.value = value;
+        break;
+      }
+      element.innerText = value;
+      break;
+    case "object":
+      if (Array.isArray(value)) {
+        inputs = element.querySelectorAll("input");
+        length = Math.min(inputs.length, value.length);
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].value = value[i];
+        }
+      }
+      break;
+    default:
+      console.warn("[CA] Unexpected updateDOM type:", typeof value);
+      break;
+  }
+}
 
 /**
  * ROS PUBLISHER
  **/
 const publishButtons = document.getElementsByClassName("publish");
-console.debug("publisher", document.title, publishButtons);
 for (const btn of publishButtons) {
-  // PublisherはButtonエレメントにのみ限定する
+  console.assert(btn.tagName === "BUTTON", "PublisherはButtonエレメントにのみ限定する");
+  console.assert(btn.getAttribute("data-rtype") in MSG_TYPES, `Publisherのdata-rtypeが不正です. ${btn.getAttribute("data-rtype")}`);
   if (btn.tagName !== "BUTTON") {
     continue;
   }
 
   btn.addEventListener("click", async (e) => {
-    const rostopic_name = btn.getAttribute("name");
-    const type = btn.getAttribute("data-rtype");
-    const value = btn.getAttribute("value");
-    console.debug(rostopic_name, type, value);
-    eel.ros_publish(rostopic_name, type, value);
+    const name = e.currentTarget.getAttribute("name");
+    const type = MSG_TYPES[e.currentTarget.getAttribute("data-rtype")];
+    const value = e.currentTarget.getAttribute("value");
+
+    const event = new CustomEvent(ROS_EVENTS.Publish, {
+      detail: { name, type, value },
+    });
+    document.dispatchEvent(event);
   });
 }
 
@@ -43,129 +66,149 @@ for (const btn of publishButtons) {
  * ROS SUBSCRIBER
  **/
 const subscribeElements = document.getElementsByClassName("subscribe");
-console.debug("subscriber", document.title, subscribeElements);
 for (const element of subscribeElements) {
-  const topic_name = element.getAttribute("name");
-  const type = element.getAttribute("data-rtype");
-  eel.ros_subscribe(topic_name, type);
-}
+  console.assert(element.getAttribute("data-rtype") in MSG_TYPES, `Subscriberのdata-rtypeが不正です. ${element.getAttribute("data-rtype")}`);
 
-eel.expose(updateSubscribedValue);
-function updateSubscribedValue(topicName, type, value) {
-  const topicElements = document.getElementsByName(topicName);
-  for (const element of topicElements) {
+  const name = element.getAttribute("name");
+  const type = MSG_TYPES[element.getAttribute("data-rtype")];
+
+  // Subscribe開始
+  const event = new CustomEvent(ROS_EVENTS.Subscribe, {
+    detail: { name, type },
+  });
+  document.dispatchEvent(event);
+
+  // DOM更新コールバック登録
+  if (element.hasAttribute("update-custom")) {
+    // 特殊なDOM更新処理が必要な場合は、data-update-custom属性を設定する
+    continue;
+  }
+  // Subscribeしたデータを受信した際のデフォルトDOM更新処理
+  domUpdateHelper.registerCallback(element, (type, value) => {
+    // MSG_TYPES -> js type に変換
+    // valueは常にstring
+    console.assert(type === MSG_TYPES[element.getAttribute("data-rtype")], "Typeが一致しません");
+    var jsvalue;
     switch (type) {
       case MSG_TYPES.Bool:
-        element.innerText = value;
+        jsvalue = value === "True";
         break;
       case MSG_TYPES.Int32:
-        element.innerText = value;
+        jsvalue = parseInt(value);
         break;
       case MSG_TYPES.Int64:
-        element.innerText = value;
+        jsvalue = parseInt(value);
         break;
       case MSG_TYPES.Float32:
-        element.innerText = value;
+        jsvalue = parseFloat(value);
         break;
       case MSG_TYPES.Float64:
-        element.innerText = value;
+        jsvalue = parseFloat(value);
         break;
       case MSG_TYPES.String:
-        element.innerText = value;
+        jsvalue = value;
         break;
       case MSG_TYPES.Transform:
-        // valueは配列が来る事を期待
-        inputs = element.querySelectorAll("input");
-        length = Math.min(inputs.length, value.length);
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].value = value[i];
-        }
+        jsvalue = value; // [x, y, z, qx, qy, qz, qw]
         break;
       case MSG_TYPES.Pose:
-        // valueは配列が来る事を期待
-        inputs = element.querySelectorAll("input");
-        length = Math.min(inputs.length, value.length);
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].value = value[i];
-        }
+        jsvalue = value; // [x, y, z, qx, qy, qz, qw]
         break;
       case MSG_TYPES.Image:
-        img = element.querySelector("img");
-        img.src = "data:image/jpeg;base64," + value;
+        jsvalue = "data:image/jpeg;base64," + value; // base64string
         break;
       default:
-        console.error("[CA] Unexpected ROS Message type:", type);
-        break;
+        console.error("[CA] Unexpected ROS Message Type:", type);
+        return;
     }
-  }
+    // DOM更新
+    updateDOM(element, value);
+  });
 }
+document.addEventListener(ROS_EVENTS.SubscribedValue, async (e) => {
+  const { name, type, value } = e.detail;
+  const topicElements = document.getElementsByName(name);
+  topicElements.forEach((element) => {
+    domUpdateHelper.executeCallbacks(element, type, value);
+  });
+});
+
+
 
 /**
  * ROS Parameters
  **/
-const paramInputs = document.getElementsByClassName("rosparam");
-console.debug("params", document.title, paramInputs);
-for (const input of paramInputs) {
-  eel.ros_register_param(input.getAttribute("name"), input.getAttribute("data-rtype"));
-}
-for (const input of paramInputs) {
-  if(input.getAttribute("type") === "checkbox"){
-    input.addEventListener("change", async (e) => {
-      const name = input.getAttribute("name");
-      const type = input.getAttribute("data-rtype");
-      const value = input.checked;
-      console.debug(name, type, value);
-      eel.ros_set_param(name, type, value);
-    });
+const paramElements = document.getElementsByClassName("rosparam");
+for (const element of paramElements) {
+  console.assert(element.getAttribute("data-rtype") in PARAM_TYPES, `Parameterのdata-rtypeが不正です. ${element.getAttribute("data-rtype")}`);
+  const name = element.getAttribute("name");
+  const type = PARAM_TYPES[element.getAttribute("data-rtype")];
+  const event = new CustomEvent(ROS_EVENTS.Param, {
+    detail: { name, type },
+  });
+  document.dispatchEvent(event);
+  
+  // コールバック登録
+  if (element.hasAttribute("update-custom")) {
+    // 特殊なコールバックが必要な場合は、data-update-custom属性を設定する
     continue;
   }
+
   /** ROSPARAM SETTER */
-  input.addEventListener("blur", async (e) => {
-    const name = input.getAttribute("name");
-    const type = input.getAttribute("data-rtype");
-    const value = input.getAttribute("value");
+  element.addEventListener("change", async (e) => {
+    const name = e.currentTarget.getAttribute("name");
+    const type = PARAM_TYPES[e.currentTarget.getAttribute("data-rtype")];
+    const value = e.currentTarget.value;
     console.debug(name, type, value);
-    eel.ros_set_param(name, type, value);
+    const event = new CustomEvent(ROS_EVENTS.ParamSet, {
+      detail: { name, type, value },
+    });
+    document.dispatchEvent(event);
+  });
+
+  // rosparamのデータを受信した際のデフォルトDOM更新処理
+  domUpdateHelper.registerCallback(element, (type, value) => {
+    // valueは常にstring
+    console.assert(type === PARAM_TYPES[element.getAttribute("data-rtype")], "Typeが一致しません");
+    var jsvalue;
+    switch (type) {
+      case PARAM_TYPES.Bool:
+        jsvalue = value === "True";
+        break;
+      case PARAM_TYPES.Number:
+        jsvalue = parseFloat(value);
+        break;
+      case PARAM_TYPES.String:
+        jsvalue = value;
+        break;
+      default:
+        console.error("[CA] Unexpected ROS Param Type:", type);
+        return;
+    }
+    // DOM更新
+    updateDOM(element, value);
   });
 }
 
-/** ROSPARAM GETTER */
-eel.expose(updateParam);
-function updateParam(param_name, value) {
-  console.log("[CA] updateParam", param_name, value);
-  targetInputs = document.getElementsByName(param_name);
-  console.debug("targetInputs", targetInputs);
-  for (const input of targetInputs) {
-    if (typeof value == "string") {
-      input.value = value;
-    } else if (typeof value == "boolean") {
-      input.checked = value;
-    } else if (typeof value == "number") {
-      input.value = value;
-    } else {
-      console.error(
-        `[CA] Rosparam input view only accepts string, boolean, number: received ${typeof value}`
-      );
-    }
-  }
-}
+document.addEventListener(ROS_EVENTS.ParamUpdated, async (e) => {
+  const { name, type, value } = e.detail;
+  const paramElements = document.getElementsByName(name);
+  paramElements.forEach((element) => {
+    domUpdateHelper.executeCallbacks(element, type, value);
+  });
+});
 
 /**
- * Unregister all events on onload page.
+ * Unregister all ros pub/sub/params on unload page.
  **/
 window.addEventListener("unload", async (e) => {
-  for (const input of paramInputs) {
-    eel.ros_unregister_param(input.getAttribute("name"));
+  for (const element of publishButtons) {
+    eel.ros_unpublish(element.getAttribute("name"));
   }
   for (const element of subscribeElements) {
     eel.ros_unsubscribe(element.getAttribute("name"));
   }
+  for (const element of paramElements) {
+    eel.ros_unregister_param(element.getAttribute("name"));
+  }
 });
-
-// Health check to notify successful js runtime.
-eel.expose(health);
-function health(value) {
-  console.log("[CA] Python -> JS: OK");
-  return document.title + ": " + value;
-}
-eel.health(document.title);

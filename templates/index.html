@@ -1,126 +1,142 @@
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>ROS EEL Example</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
-  </head>
-  <body>
-    {% include "components/header.html" %}
-    <div class="container">
-      <div class="component">
-        <h1>ROS EEL Example</h1>
-        <p>
-          This is an example of using EEL with ROS. The following components
-          are available:
-        </p>
-        <ul>
-          <li><a href="#subs">ROS Subscribers</a></li>
-          <li><a href="#pubs">ROS Publishers</a></li>
-          <li><a href="#params">ROS Params</a></li>
-          <li><a href="#tabs">Tabs</a></li>
-        </ul>
-    </div>
-    <div class="container">
-      <div class="component">
-        <a name="subs"><h2 name="">ROS Subscribers</h2></a>
-        <h3>/eel_subtest/bool</h3>
-        {% with name="/eel_subtest/bool" %} {% include
-        "components/subscribers/Bool.html" %} {% endwith %}
-        <h3>/eel_subtest/int32</h3>
-        {% with name="/eel_subtest/int32" %} {% include
-        "components/subscribers/Int32.html" %} {% endwith %}
-        <h3>/eel_subtest/int64</h3>
-        {% with name="/eel_subtest/int64" %} {% include
-        "components/subscribers/Int64.html" %} {% endwith %}
-        <h3>/eel_subtest/float32</h3>
-        {% with name="/eel_subtest/float32" %} {% include
-        "components/subscribers/Float32.html" %} {% endwith %}
-        <h3>/eel_subtest/float64</h3>
-        {% with name="/eel_subtest/float64" %} {% include
-        "components/subscribers/Float64.html" %} {% endwith %}
-        <h3>/eel_subtest/string</h3>
-        {% with name="/eel_subtest/string" %} {% include
-        "components/subscribers/String.html" %} {% endwith %}
-        <h3>/eel_subtest/transform</h3>
-        {% with name="/eel_subtest/transform" %} {% include
-        "components/subscribers/Transform.html" %} {% endwith %}
-        <h3>/eel_subtest/pose</h3>
-        {% with name="/eel_subtest/pose" %} {% include
-        "components/subscribers/Pose.html" %} {% endwith %}
-        <h3>/eel_subtest/image</h3>
-        {% with name="/eel_subtest/image" %} {% include
-        "components/subscribers/Image.html" %} {% endwith %}
-      </div>
-    </div>
+{% extends "components/base.html" %}
 
-    <div class="container">
-      <div class="component">
-        <a name="pubs"><h2>ROS Publishers</h2></a>
-        <div>
-          <h3>/eel_pubtest/bool</h3>
-          {% with name="/eel_pubtest/bool", value="True", label="Publish Bool"
-          %} {% include "components/publishers/Bool.html" %} {% endwith %}
-        </div>
-        <div>
-          <h3>/eel_pubtest/string</h3>
-          {% with name="/eel_pubtest/string", value="test", label="Publish
-          String" %} {% include "components/publishers/String.html" %} {%
-          endwith %}
-        </div>
-        <div>
-          <h3>/eel_pubtest/int32</h3>
-          {% with name="/eel_pubtest/int32", value="123", label="Publish Int32"
-          %} {% include "components/publishers/Int32.html" %} {% endwith %}
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div clasS="component">
-        <a name="params"><h2>ROS Params</h2></a>
-        <div>
-          <h3>/eel_paramtest/bool</h3>
-          {% with name="/eel_paramtest/bool"
-          %} {% include "components/params/Bool.html" %} {% endwith %}
-          <h3>/eel_paramtest/number</h3>
-          {% with name="/eel_paramtest/number"
-          %} {% include "components/params/Number.html" %} {% endwith %}
-          <h3>/eel_paramtest/string</h3>
-          {% with name="/eel_paramtest/string"
-          %} {% include "components/params/String.html" %} {% endwith %}
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="component">
-        <a name="tabs"><h2>Tabs</h2></a>
-        <div class="tabs">
-          <button class="tab" onclick="openTab(event, 'tab1')">Tab 1</button>
-          <button class="tab" onclick="openTab(event, 'tab2')">Tab 2</button>
-          <button class="tab" onclick="openTab(event, 'tab3')">Tab 3</button>
-        </div>
-        <iframe class="tabcontent" id="tab1" src="/frame1.html" style="display: none"></iframe>
-        <iframe class="tabcontent" id="tab2" src="/frame2.html" style="display: none"></iframe>
-        <iframe class="tabcontent" id="tab3" src="/frame3.html" style="display: none"></iframe>
-      </div>
-    </div>
-    <script type="text/javascript" src="/eel.js"></script>
-    <script type="text/javascript" src="/scripts.js"></script>
-    <script type="text/javascript">
-      function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tab");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-      }
-    </script>
-  </body>
+{% block title %}
+    ROS EEL Example
+{% endblock %}
 
-</html>
+{% block content %}
+<div class="container">
+  <div class="component">
+    <h1>ROS EEL Example</h1>
+    <p>
+      This is an example of using EEL with ROS. The following components
+      are available:
+    </p>
+    <ul>
+      <li><a href="#subs">ROS Subscribers</a></li>
+      <li><a href="#pubs">ROS Publishers</a></li>
+      <li><a href="#params">ROS Params</a></li>
+      <li><a href="#tabs">Tabs</a></li>
+    </ul>
+</div>
+<div class="container">
+  <div class="component">
+    <a name="subs"><h2 name="">ROS Subscribers</h2></a>
+    <h3>/eel_subtest/bool</h3>
+    {% with name="/eel_subtest/bool" %}
+      {% include "components/subscribers/Bool.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/int32</h3>
+    {% with name="/eel_subtest/int32" %}
+      {% include "components/subscribers/Int32.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/int64</h3>
+    {% with name="/eel_subtest/int64" %}
+      {% include "components/subscribers/Int64.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/float32</h3>
+    {% with name="/eel_subtest/float32" %}
+      {% include "components/subscribers/Float32.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/float64</h3>
+    {% with name="/eel_subtest/float64" %}
+      {% include "components/subscribers/Float64.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/string</h3>
+    {% with name="/eel_subtest/string" %}
+      {% include "components/subscribers/String.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/transform</h3>
+    {% with name="/eel_subtest/transform" %}
+      {% include "components/subscribers/Transform.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/pose</h3>
+    {% with name="/eel_subtest/pose" %}
+      {% include "components/subscribers/Pose.html" %}
+    {% endwith %}
+    <h3>/eel_subtest/image</h3>
+    {% with name="/eel_subtest/image" %}
+      {% include "components/subscribers/Image.html" %}
+    {% endwith %}
+  </div>
+</div>
+
+<div class="container">
+  <div class="component">
+    <a name="pubs"><h2>ROS Publishers</h2></a>
+    <div>
+      <h3>/eel_pubtest/bool</h3>
+      {% with name="/eel_pubtest/bool", value="True", label="Publish Bool" %}
+        {% include "components/publishers/Bool.html" %}
+      {% endwith %}
+    </div>
+    <div>
+      <h3>/eel_pubtest/string</h3>
+      {% with name="/eel_pubtest/string", value="test", label="Publish String" %}
+        {% include "components/publishers/String.html" %}
+      {% endwith %}
+    </div>
+    <div>
+      <h3>/eel_pubtest/int32</h3>
+      {% with name="/eel_pubtest/int32", value="123", label="Publish Int32" %}
+        {% include "components/publishers/Int32.html" %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div clasS="component">
+    <a name="params"><h2>ROS Params</h2></a>
+    <div>
+      <h3>/eel_paramtest/bool</h3>
+      {% with name="/eel_paramtest/bool" %}
+        {% include "components/params/Bool.html" %}
+      {% endwith %}
+      <h3>/eel_paramtest/number</h3>
+      {% with name="/eel_paramtest/number" %}
+        {% include "components/params/Number.html" %}
+      {% endwith %}
+      <h3>/eel_paramtest/string</h3>
+      {% with name="/eel_paramtest/string" %}
+        {% include "components/params/String.html" %}
+      {% endwith %}
+      <h3>/eel_paramtest/enum Radio</h3>
+      {% with name="/eel_paramtest/enum", type="radio", map=[{"value": "item1", "label": "ラベル1" }, {"value": "item2", "label": "ラベル2"}] %}
+        {% include "components/params/EnumRadio.html" %}
+      {% endwith %}
+      <h3>/eel_paramtest/enum Select</h3>
+      {% with name="/eel_paramtest/enum", type="select", map=[{"value": "item1", "label": "ラベル1" }, {"value": "item2", "label": "ラベル2"}] %}
+        {% include "components/params/EnumSelect.html" %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="component">
+    <a name="tabs"><h2>Tabs</h2></a>
+    <div class="tabs">
+      <button class="tab" onclick="openTab(event, 'tab1')">Tab 1</button>
+      <button class="tab" onclick="openTab(event, 'tab2')">Tab 2</button>
+      <button class="tab" onclick="openTab(event, 'tab3')">Tab 3</button>
+    </div>
+    <iframe class="tabcontent" id="tab1" src="/frame1.html" style="display: none"></iframe>
+    <iframe class="tabcontent" id="tab2" src="/frame2.html" style="display: none"></iframe>
+    <iframe class="tabcontent" id="tab3" src="/frame3.html" style="display: none"></iframe>
+  </div>
+</div>
+<script type="text/javascript">
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,51 @@
+<!-- 
+  Usage: 
+    name: "/eel_paramtest/string"
+    map: 
+      - value: "1"
+        label: "One"
+      - value: "2"
+        label: "Two"
+ -->
+{% set element_id = generate_id() %}
+<div id="{{element_id}}">
+  {% for item in map %}
+    <input
+      update-custom
+      class="rosparam"
+      data-rtype="String"
+      type="radio"
+      name="{{name}}"
+      value="{{item['value']}}"
+      id="{{element_id}}-{{item['value']}}"
+    />
+    <label
+      for="{{element_id}}-{{item['value']}}"
+    >{{item['label']}}</label>
+  {% endfor %}
+</div>
+<script>
+  function updateEnumDOM(type, value){
+    const input = document.getElementById("{{element_id}}-" + value); 
+    if(input.value === value) {
+      input.checked = true;
+    }
+  }
+
+  var element = document.getElementById("{{element_id}}");
+  var inputs = element.querySelectorAll("input");
+
+  inputs.forEach((input) => {
+    domUpdateHelper.registerCallback(input, updateEnumDOM);
+    input.addEventListener("change", (event) => {
+      const newEvent = new CustomEvent(ROS_EVENTS.ParamSet, {
+        detail: {
+          name: event.target.getAttribute("name"),
+          type: PARAM_TYPES[event.target.getAttribute("data-rtype")],
+          value: event.target.value
+        }
+      });
+      document.dispatchEvent(newEvent);
+    });
+  });
+</script>
