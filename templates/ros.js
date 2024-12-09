@@ -3,8 +3,8 @@
  * カスタムイベントPublishEvent を購読して、ROSにPublishする
  **/
 document.addEventListener(ROS_EVENTS.Publish, async (e) => {
-  const { topicName, type, value } = e.detail;
-  eel.ros_publish(topicName, type, value);
+  const { name, type, value } = e.detail;
+  eel.ros_publish(name, type, value);
 });
 
 /**
@@ -13,14 +13,14 @@ document.addEventListener(ROS_EVENTS.Publish, async (e) => {
  * サブスクライバーが受信したデータをカスタムイベントSubscribedValue で通知する
  **/
 document.addEventListener(ROS_EVENTS.Subscribe, async (e) => {
-  const { topicName, type } = e.detail;
-  eel.ros_subscribe(topicName, type);
+  const { name, type } = e.detail;
+  eel.ros_subscribe(name, type);
 });
 
 eel.expose(updateSubscribedValue);
-function updateSubscribedValue(topicName, type, value) {
+function updateSubscribedValue(name, type, value) {
   const event = new CustomEvent(ROS_EVENTS.SubscribedValue, {
-    detail: { topicName, type, value },
+    detail: { name, type, value },
   })
   document.dispatchEvent(event);
 }
@@ -30,20 +30,20 @@ function updateSubscribedValue(topicName, type, value) {
  * カスタムイベントParamEvent を購読して、ROSにパラメータを登録する
  **/
 document.addEventListener(ROS_EVENTS.Param, async (e) => {
-  const { paramName, type } = e.detail;
-  eel.ros_register_param(paramName, type);
+  const { name, type } = e.detail;
+  eel.ros_register_param(name, type);
 });
 
 document.addEventListener(ROS_EVENTS.ParamSet, async (e) => {
-  const { paramName, type, value } = e.detail;
-  eel.ros_set_param(paramName, type, value);
+  const { name, type, value } = e.detail;
+  eel.ros_set_param(name, type, value);
 });
 
 /** ROSPARAM GETTER */
 eel.expose(updateParam);
-function updateParam(paramName, type, value) {
+function updateParam(name, type, value) {
   const event = new CustomEvent(ROS_EVENTS.ParamUpdated, {
-    detail: { paramName, type, value },
+    detail: { name, type, value },
   });
   document.dispatchEvent(event);
 }

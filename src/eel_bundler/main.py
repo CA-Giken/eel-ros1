@@ -40,6 +40,11 @@ def convert_csv_to_json(filepath):
     with open(f'{dist_path}/{filepath.replace(".csv", ".json")}', 'w', encoding='utf-8') as f:
         json.dump(descriptions, f, ensure_ascii=False, indent=2)
 
+# jinja2内で使うUUID生成関数
+def generate_id():
+    import uuid
+    return str(uuid.uuid4())
+
 def bundle(root, template = "templates", dist = "dist/web"):
     # templatesフォルダ直下のHTMLファイルをdist/web/に保存
     global package_path, template_path, dist_path, env
@@ -48,6 +53,9 @@ def bundle(root, template = "templates", dist = "dist/web"):
     dist_path = os.path.join(package_path, dist)
     os.makedirs(dist_path, exist_ok=True)
     env = Environment(loader=FileSystemLoader(template_path))
+
+    # jinja2内で使う関数を登録
+    env.globals.update(generate_id=generate_id)
 
     files = os.listdir(template_path)
     for file in files:

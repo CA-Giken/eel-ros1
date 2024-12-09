@@ -17,10 +17,10 @@ globalThis.PARAM_TYPES = {
 }
 
 globalThis.ROS_EVENTS = {
-  Publish: "Publish", // { topicName, type, value },
-  Subscribe: "Subscribe", // { topicName, type },
-  SubscribedValue: "SubscribedValue", // { topicName, type, value },
-  Param: "Param", // { paramName, type },
-  ParamSet: "ParamSet", // { paramName, type, value },
-  ParamUpdated: "ParamUpdated", // { paramName, value },
+  Publish: "Publish", // { name, type, value },
+  Subscribe: "Subscribe", // { name, type },
+  SubscribedValue: "SubscribedValue", // { name, type, value },
+  Param: "Param", // { name, type },
+  ParamSet: "ParamSet", // { name, type, value },
+  ParamUpdated: "ParamUpdated", // { name, value },
 }

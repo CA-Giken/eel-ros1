@@ -13,6 +13,7 @@ def health(value):
 
 @eel.expose
 def ros_publish(topic_name: str, typ: str, value: str):
+    global pubs
     assert typ in MSG_TYPES.values(), f"[CA] Invalid message type: {typ}. Available types: {MSG_TYPES.values()}"
     assert topic_name.startswith('/'), f"[CA] Invalid topic name: {topic_name}. Must starts with '/"
 
@@ -33,6 +34,7 @@ def ros_publish(topic_name: str, typ: str, value: str):
 
 @eel.expose
 def ros_subscribe(topic_name: str, typ: str):
+    global subs
     assert typ in MSG_TYPES.values(), f"[CA] Invalid message type: {typ}. Available types: {MSG_TYPES.values()}"
     assert topic_name.startswith('/'), f"[CA] Invalid topic name: {topic_name}. Must starts with '/"
 
@@ -53,6 +55,7 @@ def ros_subscribe(topic_name: str, typ: str):
 
 @eel.expose
 def ros_unsubscribe(topic_name: str):
+    global subs
     assert topic_name in subs.keys(), f"[CA] Invalid topic name: {topic_name}. Not subscribed yet."
 
     try:
@@ -64,6 +67,7 @@ def ros_unsubscribe(topic_name: str):
 
 @eel.expose
 def ros_set_param(param_name: str, typ: str, param_value):
+    global rosparams
     assert typ in PARAM_TYPES.values(), f"[CA] Invalid ROSParam type: {typ}. Available types: {PARAM_TYPES.values()}"
     assert rosparams[param_name]["type"] == typ, f"[CA] Invalid ROSParam type: {typ}. Expected: {rosparams[param_name]['type']}"
 
@@ -71,23 +75,31 @@ def ros_set_param(param_name: str, typ: str, param_value):
         rospy.set_param(param_name, param_value)
         rosparams[param_name]["value"] = param_value
         print("[CA] Rosparam set:", param_name, param_value)
+        eel.updateParam(param_name, typ, param_value)
     except Exception as e:
         print("[CA] Failed to set rosparam:", param_name, param_value, e.args)
 
 @eel.expose
 def ros_register_param(param_name: str, typ: str):
+    global rosparams
     assert typ in PARAM_TYPES.values(), f"[CA] Invalid ROSParam type: {typ}. Available types: {PARAM_TYPES.values()}"
 
+    rosparams[param_name] = {
+        "type": typ,
+        "value": None
+    }
     try:
         value = rospy.get_param(param_name)
-        rosparams[param_name] = {
-            "type": typ,
-            "value": value
-        }
-        eel.updateParam(param_name, typ, value)
+        rosparams[param_name]["value"] = value
         print("[CA] Rosparam registered:", param_name, value)
     except Exception as e:
         print("[CA] Failed to register rosparam:", param_name, e.args)
+
+    eel.updateParam(
+        param_name,
+        rosparams[param_name]["type"],
+        rosparams[param_name]["value"]
+    )
 
 @eel.expose
 def ros_unregister_param(param_name: str):

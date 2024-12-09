@@ -51,12 +51,12 @@ for (const btn of publishButtons) {
   }
 
   btn.addEventListener("click", async (e) => {
-    const topicName = e.currentTarget.getAttribute("name");
+    const name = e.currentTarget.getAttribute("name");
     const type = MSG_TYPES[e.currentTarget.getAttribute("data-rtype")];
     const value = e.currentTarget.getAttribute("value");
 
     const event = new CustomEvent(ROS_EVENTS.Publish, {
-      detail: { topicName, type, value },
+      detail: { name, type, value },
     });
     document.dispatchEvent(event);
   });
@@ -69,17 +69,17 @@ const subscribeElements = document.getElementsByClassName("subscribe");
 for (const element of subscribeElements) {
   console.assert(element.getAttribute("data-rtype") in MSG_TYPES, `Subscriberのdata-rtypeが不正です. ${element.getAttribute("data-rtype")}`);
 
-  const topicName = element.getAttribute("name");
+  const name = element.getAttribute("name");
   const type = MSG_TYPES[element.getAttribute("data-rtype")];
 
   // Subscribe開始
   const event = new CustomEvent(ROS_EVENTS.Subscribe, {
-    detail: { topicName, type },
+    detail: { name, type },
   });
   document.dispatchEvent(event);
 
   // DOM更新コールバック登録
-  if (element.getAttribute("data-update-custom")) {
+  if (element.hasAttribute("update-custom")) {
     // 特殊なDOM更新処理が必要な場合は、data-update-custom属性を設定する
     continue;
   }
@@ -126,8 +126,8 @@ for (const element of subscribeElements) {
   });
 }
 document.addEventListener(ROS_EVENTS.SubscribedValue, async (e) => {
-  const { topicName, type, value } = e.detail;
-  const topicElements = document.getElementsByName(topicName);
+  const { name, type, value } = e.detail;
+  const topicElements = document.getElementsByName(name);
   topicElements.forEach((element) => {
     domUpdateHelper.executeCallbacks(element, type, value);
   });
@@ -141,30 +141,31 @@ document.addEventListener(ROS_EVENTS.SubscribedValue, async (e) => {
 const paramElements = document.getElementsByClassName("rosparam");
 for (const element of paramElements) {
   console.assert(element.getAttribute("data-rtype") in PARAM_TYPES, `Parameterのdata-rtypeが不正です. ${element.getAttribute("data-rtype")}`);
-  const paramName = element.getAttribute("name");
+  const name = element.getAttribute("name");
   const type = PARAM_TYPES[element.getAttribute("data-rtype")];
   const event = new CustomEvent(ROS_EVENTS.Param, {
-    detail: { paramName, type },
+    detail: { name, type },
   });
   document.dispatchEvent(event);
+  
+  // コールバック登録
+  if (element.hasAttribute("update-custom")) {
+    // 特殊なコールバックが必要な場合は、data-update-custom属性を設定する
+    continue;
+  }
 
   /** ROSPARAM SETTER */
   element.addEventListener("change", async (e) => {
-    const paramName = e.currentTarget.getAttribute("name");
+    const name = e.currentTarget.getAttribute("name");
     const type = PARAM_TYPES[e.currentTarget.getAttribute("data-rtype")];
     const value = e.currentTarget.value;
-    console.debug(paramName, type, value);
+    console.debug(name, type, value);
     const event = new CustomEvent(ROS_EVENTS.ParamSet, {
-      detail: { paramName, type, value },
+      detail: { name, type, value },
     });
     document.dispatchEvent(event);
   });
 
-  // DOM更新コールバック登録
-  if (element.getAttribute("data-update-custom")) {
-    // 特殊なDOM更新処理が必要な場合は、data-update-custom属性を設定する
-    continue;
-  }
   // rosparamのデータを受信した際のデフォルトDOM更新処理
   domUpdateHelper.registerCallback(element, (type, value) => {
     // valueは常にstring
@@ -190,8 +191,8 @@ for (const element of paramElements) {
 }
 
 document.addEventListener(ROS_EVENTS.ParamUpdated, async (e) => {
-  const { paramName, type, value } = e.detail;
-  const paramElements = document.getElementsByName(paramName);
+  const { name, type, value } = e.detail;
+  const paramElements = document.getElementsByName(name);
   paramElements.forEach((element) => {
     domUpdateHelper.executeCallbacks(element, type, value);
   });
