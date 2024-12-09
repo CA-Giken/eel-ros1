@@ -10,9 +10,10 @@
   </head>
   <body>
     {% include "components/header.html" %}
-
+    
     {% block content %}
     {% endblock %}
+    <script type="text/javascript" src="/tester.js"></script>
     <script type="text/javascript" src="/scripts.js"></script> <!-- DOM内を走査してイベントをバインドするので最後に必要 -->
   </body>
 </html>
