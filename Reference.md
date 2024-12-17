@@ -73,7 +73,15 @@ class="rosparam"
   <input key="[0]['Data'][3]" />
 </div>
 ~~~
-
+または
+~~~
+<div class="rosparam" name="/left/detector/ROIEdge">
+  <input key="[0].Data[0]" />
+  <input key="[0].Data[1]" />
+  <input key="[0].Data[2]" />
+  <input key="[0].Data[3]" />
+</div>
+~~~
 ## Elements for Subscriber
 
 ## Elements for Publisher
