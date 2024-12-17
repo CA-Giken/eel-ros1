@@ -78,7 +78,10 @@ class="rosparam"
 
 ## Elements for Publisher
 
-## Cache Layer
+## Appendix. 外部データファイル参照
+CSVファイルなどから、キー抽出したテキストを表示する機能
+
+## Appendix. Cache Layer
 ### Configuration Example
 1. Imageトピックをキャッシュ  
 Imageトピック/camera/imageを購読し、/cache/camera/imageにpublishするのと同時にキャシュに保持する。  
