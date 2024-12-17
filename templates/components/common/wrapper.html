@@ -2,7 +2,6 @@
 <div
   class="event-wrapper click-wrapper"
   data-event-name="{{ eventName }}"
-  onclick="dispatchWrappedEvent(event, this.dataset.eventName)"
 >
   {{ caller() }}
 </div>
@@ -12,7 +11,6 @@
 <div
   class="event-wrapper hover-wrapper"
   data-event-name="{{ eventName }}"
-  onmouseover="dispatchWrappedEvent(event, this.dataset.eventName)"
 >
   {{ caller() }}
 </div>
@@ -22,7 +20,6 @@
 <div
   class="event-wrapper leave-wrapper"
   data-event-name="{{ eventName }}"
-  onmouseout="dispatchWrappedEvent(event, this.dataset.eventName)"
 >
   {{ caller() }}
 </div>

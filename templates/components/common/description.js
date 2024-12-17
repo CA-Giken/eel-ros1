@@ -8,14 +8,14 @@ globalThis.jsonCache = {};
 async function loadJsonFile(filepath) {
   var filename = filepath.replace(".csv", "");
 
-  if (global.jsonCache[filename]) {
-    return global.jsonCache[filename];
+  if (jsonCache[filename]) {
+    return jsonCache[filename];
   }
 
   try {
     const res = await fetch(`/${filename}.json`);
     const data = await res.json();
-    global.jsonCache[filename] = data;
+    jsonCache[filename] = data;
     return data;
   } catch (e) {
     console.error("Error loading JSON:", e);
@@ -29,7 +29,7 @@ async function updateDescription(payload) {
     return;
   }
   const { rowId, csvFilename } = detail;
-
+  console.log("updateDescription", detail);
   if (!rowId) {
     return;
   }
@@ -59,15 +59,17 @@ async function updateDescription(payload) {
   });
 }
 
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", (e) => {
   var elements = document.getElementsByClassName("description");
   for (const el of elements) {
     domUpdateHelper.registerCallback(el, updateDescription);
+
+    const eventName = el.dataset.eventName;
+    document.addEventListener(eventName, (event) => {
+      const payload = {
+        detail: event.detail,
+      };
+      domUpdateHelper.executeCallbacks(el, payload);
+    });
   }
-  document.addEventListener("UIDescriptionHover", (event) => {
-    var elements = document.getElementsByClassName("description");
-    for (const el of elements) {
-      domUpdateHelper.executeCallbacks(el, { detail: event.detail });
-    }
-  });
 });

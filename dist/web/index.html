@@ -13,6 +13,7 @@
   </head>
   <body>
     
+
 <div class="container">
   <div class="component">
     <h1>ROS EEL Example</h1>
@@ -25,6 +26,7 @@
       <li><a href="#pubs">ROS Publishers</a></li>
       <li><a href="#params">ROS Params</a></li>
       <li><a href="#tabs">Tabs</a></li>
+      <li><a href="#description">Hover Description</a></li>
     </ul>
 </div>
 <div class="container">
@@ -144,7 +146,7 @@
         label: "Two"
  -->
 
-<div id="24d37f27-a71b-4f4b-b995-a983f21926e2">
+<div id="b9115c7d-8bbb-4549-afc6-84b551fdb4a2">
   
     <input
       class="rosparam"
@@ -152,10 +154,10 @@
       type="radio"
       name="/eel_paramtest/enum"
       value="1"
-      id="24d37f27-a71b-4f4b-b995-a983f21926e2-1"
+      id="b9115c7d-8bbb-4549-afc6-84b551fdb4a2-1"
     />
     <label
-      for="24d37f27-a71b-4f4b-b995-a983f21926e2-1"
+      for="b9115c7d-8bbb-4549-afc6-84b551fdb4a2-1"
     >ラベル1</label>
   
     <input
@@ -164,10 +166,10 @@
       type="radio"
       name="/eel_paramtest/enum"
       value="2"
-      id="24d37f27-a71b-4f4b-b995-a983f21926e2-2"
+      id="b9115c7d-8bbb-4549-afc6-84b551fdb4a2-2"
     />
     <label
-      for="24d37f27-a71b-4f4b-b995-a983f21926e2-2"
+      for="b9115c7d-8bbb-4549-afc6-84b551fdb4a2-2"
     >ラベル2</label>
   
 </div>
@@ -179,7 +181,7 @@
   class="rosparam"
   data-rtype="String"
   name="/eel_paramtest/enum"
-  id="d39650ac-1cae-41ef-8672-c9e2757f8b08"
+  id="71b6fed7-a330-4133-aa55-85f38dd8bce9"
   value=""
 >
   
@@ -212,6 +214,53 @@
     <iframe class="tabcontent" id="tab1" src="/frame1.html" style="display: none"></iframe>
     <iframe class="tabcontent" id="tab2" src="/frame2.html" style="display: none"></iframe>
     <iframe class="tabcontent" id="tab3" src="/frame3.html" style="display: none"></iframe>
+  </div>
+</div>
+<div class="container">
+  <div classs="component">
+    <a name="description"><h2>Hover Description</h2></a>
+
+    <div
+  class="event-wrapper hover-wrapper"
+  data-event-name="UIDescription"
+>
+  
+      <div data-row-id="/thresholding/method/fixed" data-csv-filename="description.csv" style="background-color: #d6d6ff; padding: 10px;">
+        <p>固定二値化</p>
+      </div>
+    
+</div>
+    <div
+  class="event-wrapper hover-wrapper"
+  data-event-name="UIDescription"
+>
+  
+      <div data-row-id="/thresholding/method/adaptive" data-csv-filename="description.csv" style="background-color: #e6e6ff; padding: 10px;">
+        <p>適応二値化</p>
+      </div>
+    
+</div>
+    <div
+  class="event-wrapper hover-wrapper"
+  data-event-name="UIDescription"
+>
+  
+      <div data-row-id="/thresholding/method/otsu" data-csv-filename="description.csv" style="background-color: #d6d6ff; padding: 10px;">
+        <p>大津の二値化</p>
+      </div>
+    
+</div>
+    <!--
+detailにdata-row-idを含む特定のイベントをリッスンし、
+CSVデータからdata-row-idに一致する行を取得し、
+テキスト表示するコンポーネント
+-->
+<div class="description" data-event-name="UIDescription">
+  <p class="description-field" data-column-name="id"></p>
+  <p class="description-field" data-column-name="title"></p>
+  <p class="description-field" data-column-name="category"></p>
+  <p class="description-field" data-column-name="description"></p>
+</div>
   </div>
 </div>
 <script type="text/javascript">

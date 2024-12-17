@@ -19,3 +19,21 @@ function dispatchWrappedEvent(originalEvent, customEventName) {
   });
   document.dispatchEvent(customEvent);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const clickWrappers = document.getElementsByClassName("click-wrapper");
+  for(const wrapper of clickWrappers) {
+    const eventName = wrapper.dataset.eventName;
+    wrapper.addEventListener("click", (e) => dispatchWrappedEvent(e, eventName));
+  }
+  const hoverWrappers = document.getElementsByClassName("hover-wrapper");
+  for(const wrapper of hoverWrappers) {
+    const eventName = wrapper.dataset.eventName;
+    wrapper.addEventListener("mouseover", (e) => dispatchWrappedEvent(e, eventName));
+  }
+  const leaveWrappers = document.getElementsByClassName("leave-wrapper");
+  for(const wrapper of leaveWrappers) {
+    const eventName = wrapper.dataset.eventName;
+    wrapper.addEventListener("mouseout", (e) => dispatchWrappedEvent(e, eventName));
+  }
+});

@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+{% from "components/common/wrapper.html" import hover_wrapper %}
 <div class="container">
   <div class="component">
     <h1>ROS EEL Example</h1>
@@ -17,6 +18,7 @@
       <li><a href="#pubs">ROS Publishers</a></li>
       <li><a href="#params">ROS Params</a></li>
       <li><a href="#tabs">Tabs</a></li>
+      <li><a href="#description">Hover Description</a></li>
     </ul>
 </div>
 <div class="container">
@@ -126,6 +128,28 @@
     <iframe class="tabcontent" id="tab1" src="/frame1.html" style="display: none"></iframe>
     <iframe class="tabcontent" id="tab2" src="/frame2.html" style="display: none"></iframe>
     <iframe class="tabcontent" id="tab3" src="/frame3.html" style="display: none"></iframe>
+  </div>
+</div>
+<div class="container">
+  <div class="component">
+    <a name="description"><h2>Hover Description</h2></a>
+
+    {% call hover_wrapper(eventName="UIDescription") %}
+      <div data-row-id="/thresholding/method/fixed" data-csv-filename="description.csv" style="background-color: #d6d6ff; padding: 10px;">
+        <p>固定二値化</p>
+      </div>
+    {% endcall %}
+    {% call hover_wrapper(eventName="UIDescription") %}
+      <div data-row-id="/thresholding/method/adaptive" data-csv-filename="description.csv" style="background-color: #e6e6ff; padding: 10px;">
+        <p>適応二値化</p>
+      </div>
+    {% endcall %}
+    {% call hover_wrapper(eventName="UIDescription") %}
+      <div data-row-id="/thresholding/method/otsu" data-csv-filename="description.csv" style="background-color: #d6d6ff; padding: 10px;">
+        <p>大津の二値化</p>
+      </div>
+    {% endcall %}
+    {% include "components/common/description.html" %}
   </div>
 </div>
 <script type="text/javascript">
