@@ -101,12 +101,16 @@
         {% include "components/params/String.html" %}
       {% endwith %}
       <h3>/eel_paramtest/enum Radio</h3>
-      {% with name="/eel_paramtest/enum", type="radio", map=[{"value": "item1", "label": "ラベル1" }, {"value": "item2", "label": "ラベル2"}] %}
+      {% with name="/eel_paramtest/enum", type="radio", map=[{"value": "1", "label": "ラベル1" }, {"value": "2", "label": "ラベル2"}] %}
         {% include "components/params/EnumRadio.html" %}
       {% endwith %}
       <h3>/eel_paramtest/enum Select</h3>
-      {% with name="/eel_paramtest/enum", type="select", map=[{"value": "item1", "label": "ラベル1" }, {"value": "item2", "label": "ラベル2"}] %}
+      {% with name="/eel_paramtest/enum", type="select", map=[{"value": "1", "label": "ラベル1" }, {"value": "2", "label": "ラベル2"}] %}
         {% include "components/params/EnumSelect.html" %}
+      {% endwith %}
+      <h3>/eel_paramtest/object Object</h3>
+      {% with name="/eel_paramtest/object" %}
+        {% include "components/params/Object.html" %}
       {% endwith %}
     </div>
   </div>

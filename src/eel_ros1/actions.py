@@ -80,17 +80,32 @@ def ros_set_param(param_name: str, typ: str, param_value):
         print("[CA] Failed to set rosparam:", param_name, param_value, e.args)
 
 @eel.expose
-def ros_register_param(param_name: str, typ: str):
+def ros_register_param(param_name: str):
     global rosparams
-    assert typ in PARAM_TYPES.values(), f"[CA] Invalid ROSParam type: {typ}. Available types: {PARAM_TYPES.values()}"
 
     rosparams[param_name] = {
-        "type": typ,
+        "type": None,
         "value": None
     }
     try:
         value = rospy.get_param(param_name)
         rosparams[param_name]["value"] = value
+
+        # Get the type of the parameter
+        if isinstance(value, bool):
+            rosparams[param_name]["type"] = PARAM_TYPES["Bool"]
+        elif isinstance(value, int):
+            rosparams[param_name]["type"] = PARAM_TYPES["Number"]
+        elif isinstance(value, float):
+            rosparams[param_name]["type"] = PARAM_TYPES["Number"]
+        elif isinstance(value, str):
+            rosparams[param_name]["type"] = PARAM_TYPES["String"]
+        elif isinstance(value, list):
+            rosparams[param_name]["type"] = PARAM_TYPES["List"]
+        elif isinstance(value, dict):
+            rosparams[param_name]["type"] = PARAM_TYPES["Object"]
+        else:
+            raise TypeError(f"Invalid type: {type(value)}")
         print("[CA] Rosparam registered:", param_name, value)
     except Exception as e:
         print("[CA] Failed to register rosparam:", param_name, e.args)
@@ -105,3 +120,9 @@ def ros_register_param(param_name: str, typ: str):
 def ros_unregister_param(param_name: str):
     rosparams.pop(param_name)
     print("[CA] Rosparam unregistered:", param_name)
+
+@eel.expose
+def ros_get_param(param_name: str):
+    assert param_name in rosparams.keys(), f"[CA] Invalid ROSParam name: {param_name}. Not registered yet."
+
+    return rosparams[param_name]["value"]

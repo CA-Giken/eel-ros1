@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+    ROS EEL Example
+</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <!-- 外部パッケージ群 start -->
+    <script type="text/javascript" src="/static/zod.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <!-- 外部パッケージ群 end -->
+    <script type="text/javascript" src="/bundle.umd.cjs"></script>
+  </head>
+  <body>
+    
+<div class="container">
+  <div class="component">
+    <h1>ROS EEL Example</h1>
+    <p>
+      This is an example of using EEL with ROS. The following components
+      are available:
+    </p>
+    <ul>
+      <li><a href="#subs">ROS Subscribers</a></li>
+      <li><a href="#pubs">ROS Publishers</a></li>
+      <li><a href="#params">ROS Params</a></li>
+      <li><a href="#tabs">Tabs</a></li>
+    </ul>
+</div>
+<div class="container">
+  <div class="component">
+    <a name="subs"><h2 name="">ROS Subscribers</h2></a>
+    <h3>/eel_subtest/bool</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/bool" data-rtype="Bool"></div>
+    
+    <h3>/eel_subtest/int32</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/int32" data-rtype="Int32"></div>
+    
+    <h3>/eel_subtest/int64</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/int64" data-rtype="Int64"></div>
+    
+    <h3>/eel_subtest/float32</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/float32" data-rtype="Float32"></div>
+    
+    <h3>/eel_subtest/float64</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/float64" data-rtype="Float64"></div>
+    
+    <h3>/eel_subtest/string</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/string" data-rtype="String"></div>
+    
+    <h3>/eel_subtest/transform</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/transform" data-rtype="Transform">
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+</div>
+    
+    <h3>/eel_subtest/pose</h3>
+    
+      <div class="subscribe sub-input" name="/eel_subtest/pose" data-rtype="Pose">
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+  <input readonly type="text" />
+</div>
+    
+    <h3>/eel_subtest/image</h3>
+    
+      <div class="subscribe" name="/eel_subtest/image" data-rtype="Image">
+  <img src="" width="640" height="480" />
+</div>
+    
+  </div>
+</div>
+
+<div class="container">
+  <div class="component">
+    <a name="pubs"><h2>ROS Publishers</h2></a>
+    <div>
+      <h3>/eel_pubtest/bool</h3>
+      
+        <button class="publish btn" name="/eel_pubtest/bool" data-rtype="String" value="True">
+  Publish Bool
+</button>
+      
+    </div>
+    <div>
+      <h3>/eel_pubtest/string</h3>
+      
+        <button class="publish btn" name="/eel_pubtest/string" data-rtype="String" value="test">
+  Publish String
+</button>
+      
+    </div>
+    <div>
+      <h3>/eel_pubtest/int32</h3>
+      
+        <button class="publish btn" name="/eel_pubtest/int32" data-rtype="Int32" value="123">
+  Publish Int32
+</button>
+      
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div clasS="component">
+    <a name="params"><h2>ROS Params</h2></a>
+    <div>
+      <h3>/eel_paramtest/bool</h3>
+      
+        <input class="rosparam" name="/eel_paramtest/bool" type="checkbox" data-rtype="Bool" />
+      
+      <h3>/eel_paramtest/number</h3>
+      
+        <input class="rosparam" name="/eel_paramtest/number" type="number" data-rtype="Number" value=-1 />
+      
+      <h3>/eel_paramtest/string</h3>
+      
+        <input class="rosparam" name="/eel_paramtest/string" type="text" data-rtype="String" value="" />
+      
+      <h3>/eel_paramtest/enum Radio</h3>
+      
+        <!-- 
+  Usage: 
+    name: "/eel_paramtest/string"
+    map: 
+      - value: "1"
+        label: "One"
+      - value: "2"
+        label: "Two"
+ -->
+
+<div id="24d37f27-a71b-4f4b-b995-a983f21926e2">
+  
+    <input
+      class="rosparam"
+      data-rtype="String"
+      type="radio"
+      name="/eel_paramtest/enum"
+      value="1"
+      id="24d37f27-a71b-4f4b-b995-a983f21926e2-1"
+    />
+    <label
+      for="24d37f27-a71b-4f4b-b995-a983f21926e2-1"
+    >ラベル1</label>
+  
+    <input
+      class="rosparam"
+      data-rtype="String"
+      type="radio"
+      name="/eel_paramtest/enum"
+      value="2"
+      id="24d37f27-a71b-4f4b-b995-a983f21926e2-2"
+    />
+    <label
+      for="24d37f27-a71b-4f4b-b995-a983f21926e2-2"
+    >ラベル2</label>
+  
+</div>
+      
+      <h3>/eel_paramtest/enum Select</h3>
+      
+        
+<select
+  class="rosparam"
+  data-rtype="String"
+  name="/eel_paramtest/enum"
+  id="d39650ac-1cae-41ef-8672-c9e2757f8b08"
+  value=""
+>
+  
+  <option value="1">ラベル1</option>
+  
+  <option value="2">ラベル2</option>
+  
+</select>
+      
+      <h3>/eel_paramtest/object Object</h3>
+      
+        <div class="rosparam" data-rtype="Object" name="/eel_paramtest/object">
+  <input type="number" data-key="[0]" />
+  <input type="number" data-key="[1]" />
+  <input type="number" data-key="[2]" />
+  <input type="number" data-key="[3]" />
+</div>
+      
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="component">
+    <a name="tabs"><h2>Tabs</h2></a>
+    <div class="tabs">
+      <button class="tab" onclick="openTab(event, 'tab1')">Tab 1</button>
+      <button class="tab" onclick="openTab(event, 'tab2')">Tab 2</button>
+      <button class="tab" onclick="openTab(event, 'tab3')">Tab 3</button>
+    </div>
+    <iframe class="tabcontent" id="tab1" src="/frame1.html" style="display: none"></iframe>
+    <iframe class="tabcontent" id="tab2" src="/frame2.html" style="display: none"></iframe>
+    <iframe class="tabcontent" id="tab3" src="/frame3.html" style="display: none"></iframe>
+  </div>
+</div>
+<script type="text/javascript">
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+</script>
+
+  </body>
+</html>

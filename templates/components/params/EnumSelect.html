@@ -1,15 +1,5 @@
-<!-- 
-  Usage: 
-    name: "/eel_paramtest/enum"
-    map: 
-      - value: "1"
-        label: "One"
-      - value: "2"
-        label: "Two"
- -->
 {% set element_id = generate_id() %}
 <select
-  update-custom
   class="rosparam"
   data-rtype="String"
   name="{{name}}"
@@ -20,25 +10,3 @@
   <option value="{{item['value']}}">{{item['label']}}</option>
   {% endfor %}
 </select>
-
-<script>
-  function updateEnumDOM(type, value){
-    var element = document.getElementById("{{element_id}}");
-    var options = element.querySelectorAll("option");
-    options.forEach((option) => {
-      option.selected = option.value === value;
-    });
-  }
-  var element = document.getElementById("{{element_id}}");
-  domUpdateHelper.registerCallback(element, updateEnumDOM);
-  element.addEventListener("change", (event) => {
-    const newEvent = new CustomEvent(ROS_EVENTS.ParamSet, {
-      detail: {
-        name: event.target.getAttribute("name"),
-        type: PARAM_TYPES[event.target.getAttribute("data-rtype")],
-        value: event.target.value
-      }
-    });
-    document.dispatchEvent(newEvent);
-  });
-</script>

@@ -15,7 +15,6 @@ from eel_ros1.models import ros_service, rosparam # FIXME: おそらくros_servi
 from eel_bundler.main import bundle
 
 PACKAGE_NAME = "eel_ros1"
-Config = ros_service.Config
 OPTIONS = {
     "host": "0.0.0.0",
     "port": 8000,
@@ -40,15 +39,16 @@ if args.html_dir:
 if args.port:
     OPTIONS['port'] = args.port
 
-if __name__ == '__main__':
-    dist_path = bundle(package_path, template=abs_path)
-    print("Starting Eel app...")
-    print("  dist path: ", dist_path)
-    print("  hosted at:", f"http://{OPTIONS['host']}:{OPTIONS['port']}")
-    eel.init(dist_path)
-    rosparam.run_getparam_loop()
-    eel.start('index.html', **OPTIONS)
+##### Mainブロック
+rospy.init_node(PACKAGE_NAME, anonymous = True)
+dist_path = os.path.join(package_path, 'dist/web')
+print("Starting Eel app...")
+print("  dist path: ", dist_path)
+print("  hosted at:", f"http://{OPTIONS['host']}:{OPTIONS['port']}")
+eel.init(dist_path)
+rosparam.run_getparam_loop()
+eel.start('index.html', **OPTIONS)
 
-    rosparam.break_getparam_loop()
-    print("[CA] App quitted.")
-    sys.exit()
+rosparam.break_getparam_loop()
+print("[CA] App quitted.")
+sys.exit()

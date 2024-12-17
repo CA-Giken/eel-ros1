@@ -3,17 +3,13 @@
   <head>
     <title>{% block title %}デフォルトタイトル{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <!-- 外部パッケージ群 start -->
+    <script type="text/javascript" src="/static/zod.js"></script>
     <script type="text/javascript" src="/eel.js"></script>
-    <script type="text/javascript" src="/const.js"></script>
-    <script type="text/javascript" src="/dom-helper.js"></script>
-    <script type="text/javascript" src="/ros.js"></script>
+    <!-- 外部パッケージ群 end -->
+    <script type="text/javascript" src="/bundle.umd.cjs"></script>
   </head>
   <body>
-    {% include "components/header.html" %}
-    
-    {% block content %}
-    {% endblock %}
-    <script type="text/javascript" src="/tester.js"></script>
-    <script type="text/javascript" src="/scripts.js"></script> <!-- DOM内を走査してイベントをバインドするので最後に必要 -->
+    {% block content %} {% endblock %}
   </body>
 </html>

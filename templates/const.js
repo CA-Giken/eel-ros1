@@ -13,7 +13,9 @@ globalThis.MSG_TYPES = {
 globalThis.PARAM_TYPES = {
   Bool: "Bool",
   Number: "Number",
-  String: "String"
+  String: "String",
+  Object: "Object",
+  Array: "Array",
 }
 
 globalThis.ROS_EVENTS = {

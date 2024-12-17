@@ -10,6 +10,8 @@ PARAM_TYPES = {
     "Bool": "Bool",
     "Number": "Number",
     "String": "String",
+    "Object": "Object",
+    "List": "List"
 }
 
 rosparams = {} # { "/param_name": { "type": PARAM_TYPES, "value": value } }

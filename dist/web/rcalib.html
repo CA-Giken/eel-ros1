@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+    panel.py:RTK_TOOLS 代用テスト
+</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
+    <!-- 外部パッケージ群 start -->
+    <script type="text/javascript" src="/static/zod.js"></script>
+    <script type="text/javascript" src="/eel.js"></script>
+    <!-- 外部パッケージ群 end -->
+    <script type="text/javascript" src="/bundle.umd.cjs"></script>
+  </head>
+  <body>
+    
+<h1>panel.py:RTK_TOOLS 代用テスト</h1>
+<div class="container">
+  <div class="component">
+    クロップ距離<input
+      class="rosparam"
+      data-rtype="Number"
+      name="/config/vcam/wd"
+      value="default"
+    />
+  </div>
+  <div class="component">
+    マスター<button
+      class="publish"
+      data-rtype="Bool"
+      name="/request/model_save"
+      value="True"
+    >
+      登録
+    </button>
+  </div>
+  <div class="component">
+    カウント  <div class="subscribe sub-input" name="/rcalib/count" data-rtype="Int32"></div> 
+  </div>
+  <div class="component">
+    カウント<button
+      class="publish"
+      data-rtype="Bool"
+      name="/request/clear"
+      value="True"
+    >
+      リセット
+    </button>
+  </div>
+  <div class="component">
+    取り込み<button
+      class="publish"
+      data-rtype="Bool"
+      name="/request/capture"
+      value="True"
+    >
+      する
+    </button>
+  </div>
+  <div class="component">
+     <div class="subscribe" name="/camera/image" data-rtype="Image">
+  <img src="" width="640" height="480" />
+</div> 
+  </div>
+</div>
+
+  </body>
+</html>
