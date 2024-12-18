@@ -7,23 +7,20 @@ class="rosparam"
 <table>
 <tr><th>Param型<th>要素<th>Widget<th>子要素<th>Attr<th>Mandatory</td>
 <tr><td rowspan="2"><td colspan="3" rowspan="2">共通<td>class="rosparam"<td>Yes
-<tr><td>name="param name"<td>Yes
+<tr><td>name={param name}<td>Yes
 <tr><td rowspan="8">number<td rowspan="6">input<td rowspan="4">Field<sup>(1)</sup><td rowspan="4">-<td>type="number"<td>
-<tr><td>format="format string"<td>
-<tr><td>max="const"<td>
-<tr><td>min="const"<td>
+<tr><td>format={format string}<td>
+<tr><td>max={const number}<td>
+<tr><td>min={const number}<td>
 <tr><td rowspan="2">Radio Button<td rowspan="2">-<td>type="radio"<td>Yes
-<tr><td>value="const"<td>Yes
+<tr><td>value={const number}<td>Yes
 <tr><td rowspan="2">select<td rowspan="2">Combo Box<td><td>type="number"<td>
-<tr><td>option<td>value="const"<td>Yes
+<tr><td>option<td>value={const number}<td>Yes
 <tr><td>bool<td>input<td>Check Box<td>-<td>type="checkbox"<td>Yes
 <tr><td>string<td>input<td>Field<td>-<td>type="text"<td>Yes
-<tr><td rowspan="3">object<td rowspan="3">div<td>-<td><td>type="number"<td>
+<tr><td rowspan="3">object<br>comprising "[...]"<td rowspan="3">div<td>-<td><td>type="number"<td>
 <tr><td rowspan="2">Field<td rowspan="2">input<td colspan="2">Same as (1) number&rarr;input&rarr;Field
-<tr><td>key="param name detailed"<td>Yes
-<tr><td rowspan="3">list<td rowspan="3">div<td>-<td><td>type="number"<td>
-<tr><td rowspan="2">Field<td rowspan="2">input<td colspan="2">Same as (1) number&rarr;input&rarr;Field
-<tr><td>key="param name or address [...]"<td>Yes
+<tr><td>ext={name extension}<td>Yes
 </table>
 
 ### Example
@@ -52,37 +49,52 @@ class="rosparam"
 4. /solver/doBin,/solver/doICPをField設定にする
 ~~~
 <div class="rosparam" name="/solver">
-  <input key="['doBin']" />
-  <input key="['doICP']" />
+  <input ext=".doBin" />
+  <input ext=".doICP" />
 </div>
 ~~~
-下の表記も同じ意味です
+下の表記も可能です。
 ~~~
 <div class="rosparam" name="/solver">
-  <input key=".doBin" />
-  <input key=".doICP" />
+  <input ext="['doBin']" />
+  <input ext="['doICP']" />
 </div>
 ~~~
 
 5. /left/detector/ROIEdge[0]/Data[0..3]をField設定にする
 ~~~
 <div class="rosparam" name="/left/detector/ROIEdge">
-  <input key="[0]['Data'][0]" />
-  <input key="[0]['Data'][1]" />
-  <input key="[0]['Data'][2]" />
-  <input key="[0]['Data'][3]" />
+  <input ext="[0].Data[0]" />
+  <input ext="[0].Data[1]" />
+  <input ext="[0].Data[2]" />
+  <input ext="[0].Data[3]" />
 </div>
 ~~~
 または
 ~~~
 <div class="rosparam" name="/left/detector/ROIEdge">
-  <input key="[0].Data[0]" />
-  <input key="[0].Data[1]" />
-  <input key="[0].Data[2]" />
-  <input key="[0].Data[3]" />
+  <input ext="[0]['Data'][0]" />
+  <input ext="[0]['Data'][1]" />
+  <input ext="[0]['Data'][2]" />
+  <input ext="[0]['Data'][3]" />
 </div>
 ~~~
 ## Elements for Subscriber
+<table>
+<tr><th>Message型<th>要素<th>Widget<th>子要素<th>Attr<th>Mandatory</td>
+<tr><td rowspan="2"><td colspan="3" rowspan="2">共通<td>class="subscribe"<td>Yes
+<tr><td>name={topic name}<td>Yes
+<tr><td rowspan="3">Int32<br>Int64<br>Float32<br>Float64<td rowspan="3">input<td rowspan="3">Field<sup>(1)</sup><td rowspan="3">-<td>type="number"<td>
+<tr><td>m-type=<br>{ "std_msgs/Int32"<br>| "std_msgs/Int64"<br>| "std_msgs/Float32"<br>| "std_msgs/Float64"}<td>Yes
+<tr><td>format={format string}<td>
+<tr><td rowspan="2">string<td rowspan="2">input<td rowspan="2">Field<td rowspan="2">-<td>type="text"<td>Yes
+<tr><td>m-type="std_msgs/String"<td>Yes
+<tr><td rowspan="4">Transform<br>Pose<td rowspan="4">div<td rowspan="2"><td rowspan="2">-<td>type="number"<td>
+<tr><td>m-type=<br>{ "geometry_msgs/Transform"<br>| "geometry_msgs/Pose"}<td>Yes
+<tr><td rowspan="2">Field<td rowspan="2">input<td>ext={name extension}<td>Yes
+<tr><td>format={format string}
+<tr><td>Image<td>img<td><td>-<td>m-type="sensor_msgs/Image"<td>Yes
+</table>
 
 ## Elements for Publisher
 
@@ -98,6 +110,7 @@ Imageトピック/camera/imageを購読し、/cache/camera/imageにpublishする
 config:
   cache:
   - topic: /camera/image
+    m-type: sensor_msgs/Image
 ~~~
 
 2. デフォルトpublish名を変える  
@@ -110,6 +123,7 @@ config:
 config:
   cache:
   - topic: /camera/image
+    m-type: sensor_msgs/Image
     to: /latest/camera/image
 ~~~
 
@@ -119,6 +133,7 @@ Imageトピックの代わりにファイルを読み出してトピックとし
 config:
   cache:
   - file: /tmp/capt00.png
+    m-type: sensor_msgs/Image
     to: /cache/camera/image    #このときは省略できない
 ~~~
 
@@ -129,8 +144,11 @@ YAMLリスト形式にて、複数のキャシュを設定します(1個しか�
 config:
   cache:
   - topic: /camera/image
+    m-type: sensor_msgs/Image
   - topic: /camera/image
+    m-type: sensor_msgs/Image
     to:  /latest/camera/image
   - file: /tmp/capt00.png
+    m-type: sensor_msgs/Image
     to: /cache/camera/image
 ~~~
