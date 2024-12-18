@@ -81,22 +81,83 @@ class="rosparam"
 ~~~
 ## Elements for Subscriber
 <table>
-<tr><th>Message型<th>要素<th>Widget<th>子要素<th>Attr<th>Mandatory</td>
-<tr><td rowspan="2"><td colspan="3" rowspan="2">共通<td>class="subscribe"<td>Yes
+<tr><th>Message型<th>(親)要素<th>Widget<th>子要素<th>Attr<th>Mandatory</td>
+<tr><td rowspan="2"><td colspan="3" rowspan="2">All<td>class="subscribe"<td>Yes
 <tr><td>name={topic name}<td>Yes
-<tr><td rowspan="3">Int32<br>Int64<br>Float32<br>Float64<td rowspan="3">input<td rowspan="3">Field<sup>(1)</sup><td rowspan="3">-<td>type="number"<td>
-<tr><td>m-type=<br>{ "std_msgs/Int32"<br>| "std_msgs/Int64"<br>| "std_msgs/Float32"<br>| "std_msgs/Float64"}<td>Yes
-<tr><td>format={format string}<td>
-<tr><td rowspan="2">string<td rowspan="2">input<td rowspan="2">Field<td rowspan="2">-<td>type="text"<td>Yes
-<tr><td>m-type="std_msgs/String"<td>Yes
-<tr><td rowspan="4">Transform<br>Pose<td rowspan="4">div<td rowspan="2"><td rowspan="2">-<td>type="number"<td>
-<tr><td>m-type=<br>{ "geometry_msgs/Transform"<br>| "geometry_msgs/Pose"}<td>Yes
+<tr><td rowspan="3">Any<br>except below<td rowspan="3">div<td><td>-<td>m-type={ros message type}<td>Yes
 <tr><td rowspan="2">Field<td rowspan="2">input<td>ext={name extension}<td>Yes
 <tr><td>format={format string}
 <tr><td>Image<td>img<td><td>-<td>m-type="sensor_msgs/Image"<td>Yes
 </table>
 
+### Example
+
+1. String型トピック/errorをFieldに表示
+~~~
+<div class="subscribe" m-type="std_msgs/String" name="/error">
+  <input ext=".data" readonly />
+</div>
+~~~
+
+2. TransformStamped型トピック/robot/toolの、frame名と直交座標を表示
+~~~
+<div class="subscribe" m-type="geometry_msgs/TransformStamped" name="/robot/tool">
+  <input ext=".header.frame_id" readonly />
+  <input ext=".transform.translation.x" readonly />
+  <input ext=".transform.translation.y" readonly />
+  <input ext=".transform.translation.z" readonly />
+</div>
+~~~
+
 ## Elements for Publisher
+<table>
+<tr><th>Message型<th>(親)要素<th>Widget<th>子要素<th>Attr<th>Mandatory</td>
+<tr><td rowspan="2"><td colspan="3" rowspan="2">All<td>class="publish"<td>Yes
+<tr><td>name={topic name}<td>Yes
+<tr><td rowspan="5">Any<td rowspan="5">div<td rowspan="2"><td rowspan="2">-<td>m-type={ros message type}<td>Yes
+<tr><td>rate={const number}
+<tr><td rowspan="2">Field<td rowspan="2">input<td>ext={name extension}<td>Yes
+<tr><td>format={format string}
+<tr><td>Button<td>button<td><td>
+</table>
+
+1. Bool型トピック/solve/execにTrue:Boolを発行
+~~~
+<div class="publish" m-type="std_msgs/Bool" name="/solve/exec">
+  <input ext=".data" value="true" type="hidden" />
+  <button>解析実行</button>
+</div>
+~~~
+
+2. Int型トピック/solve/thresholdにキー入力数値:Int32を発行
+~~~
+<div class="publish" m-type="std_msgs/Int32" name="/solve/threshold">
+  <input ext=".data" type="number" />
+  <button>整数値送信</button>
+</div>
+~~~
+
+3. Transform型トピック/solve/tfにX座標のみキー入力数値、その他は固定値を発行
+~~~
+<div class="publish" m-type="geometry_msgs/Transform" name="/solve/tf">
+  <input ext=".tranlation.x" type="number" />
+  <input ext=".tranlation.y" value="1.0" type="hidden" />
+  <input ext=".tranlation.z" value="2.0" type="hidden" />
+  <input ext=".rotation.x" value="0.0" type="hidden" />
+  <input ext=".rotation.y" value="0.0" type="hidden" />
+  <input ext=".rotation.z" value="0.0" type="hidden" />
+  <input ext=".rotation.w" value="0.0" type="hidden" />
+  <button>X座標送信</button>
+</div>
+~~~
+
+4. 定周期トピック発行(ボタンなし)
+~~~
+<div class="publish" m-type="std_msgs/Bool" name="/solve/exec" rate="1">
+  <input ext=".data" value="true" type="hidden" />
+</div>
+~~~
+
 
 ## Appendix. 外部データファイル参照
 CSVファイルなどから、キー抽出したテキストを表示する機能
