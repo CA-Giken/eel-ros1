@@ -5,7 +5,6 @@ import os
 from jinja2 import Environment, FileSystemLoader
 import sys
 
-from utils import generate_id
 
 js_packages = [
     {
@@ -53,6 +52,7 @@ def convert_csv_to_json(filepath):
         json.dump(descriptions, f, ensure_ascii=False, indent=2)
 
 def bundle(root, template = "templates", dist = "dist/web"):
+    from utils import generate_id, include_code
     # templatesフォルダ直下のHTMLファイルをdist/web/に保存
     global package_path, template_path, dist_path, env
     package_path = root
@@ -63,6 +63,7 @@ def bundle(root, template = "templates", dist = "dist/web"):
 
     # jinja2内で使う関数を登録
     env.globals.update(generate_id=generate_id)
+    env.globals.update(include_code=lambda x: include_code(x, env=env))
 
     files = os.listdir(template_path)
     for file in files:

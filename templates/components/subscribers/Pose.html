@@ -1,9 +1,13 @@
-<div class="subscribe sub-input" name="{{name}}" data-rtype="Pose">
-  <input readonly type="text" />
-  <input readonly type="text" />
-  <input readonly type="text" />
-  <input readonly type="text" />
-  <input readonly type="text" />
-  <input readonly type="text" />
-  <input readonly type="text" />
+<div
+  class="subscribe"
+  name="{{name}}"
+  m-type="geometry_msgs.msg.Pose"
+>
+  <input readonly type="text" ext=".position.x"/>
+  <input readonly type="text" ext=".position.y" />
+  <input readonly type="text" ext=".position.z" />
+  <input readonly type="text" ext=".orientation.x" />
+  <input readonly type="text" ext=".orientation.y" />
+  <input readonly type="text" ext=".orientation.z" />
+  <input readonly type="text" ext=".orientation.w" />
 </div>

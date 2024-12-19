@@ -34,7 +34,13 @@
     </button>
   </div>
   <div class="component">
-    カウント  <div class="subscribe sub-input" name="/rcalib/count" data-rtype="Int32"></div> 
+    カウント  <div
+  class="subscribe"
+  name="/rcalib/count"
+  m-type="std_msgs.msg.Int32"
+>
+  <input type="text" ext=".data" readonly />
+</div> 
   </div>
   <div class="component">
     カウント<button
@@ -57,7 +63,11 @@
     </button>
   </div>
   <div class="component">
-     <div class="subscribe" name="/camera/image" data-rtype="Image">
+     <div
+  class="subscribe"
+  name="/camera/image"
+  m-type="sensor_msgs.msg.Image"
+>
   <img src="" width="640" height="480" />
 </div> 
   </div>

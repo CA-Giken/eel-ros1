@@ -2,4 +2,12 @@ eel_paramtest:
   bool: true
   number: 42
   string: "Eel rosparam test"
-  enum: "item1"
+  enum: 1
+  list:
+    - 1
+    - 2
+    - 3
+  object:
+    key1: 1
+    key2: 2
+    key3: 3

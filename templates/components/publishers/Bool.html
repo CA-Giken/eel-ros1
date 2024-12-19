@@ -1,3 +1,10 @@
-<button class="publish btn" name="{{name}}" data-rtype="String" value="{{value}}">
-  {{label}}
-</button>
+<div
+  class="publish"
+  name="{{name}}"
+  m-type="std_msgs.msg.Bool"
+>
+  <input type="checkbox" ext=".data" value={{value}} style="display: none"/>
+  <button class="btn">
+    {{label}}
+  </button>
+</div>

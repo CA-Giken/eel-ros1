@@ -13,10 +13,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     /**
      * HTMLタグバリデータ
      */
-    console.assert(element.getAttribute("name") !== null, "Subscriberのname属性が必要です.");
-    console.assert(element.getAttribute("data-rtype") in MSG_TYPES, `Subscriberのdata-rtypeが不正です. ${element.getAttribute("data-rtype")}`);
     const name = element.getAttribute("name");
-    const type = MSG_TYPES[element.getAttribute("data-rtype")];
+    console.assert(name, "Subscriberのname属性が必要です.");
+    const type = element.getAttribute("m-type");
+    console.assert(type, "Subscriberのm-type属性が必要です.");
+    console.assert(element.tagName === "DIV", "SubscriberはDIVタグである必要があります.");
+    if (element.tagName !== "DIV") {
+      continue;
+    }
 
     /**
      * SubscriberをROSに登録
@@ -42,10 +46,10 @@ document.addEventListener("DOMContentLoaded", async () => {
    * DOM更新イベントの登録
    */
   document.addEventListener(ROS_EVENTS.SubscribedValue, async (e) => {
-    const { name, type, value } = e.detail;
+    const { name, value } = e.detail;
     const topicElements = document.getElementsByName(name);
     topicElements.forEach((element) => {
-      domUpdateHelper.executeCallbacks(element, { type, value });
+      domUpdateHelper.executeCallbacks(element, { value });
     });
   });
 });

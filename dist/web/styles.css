@@ -124,3 +124,14 @@ iframe.tabcontent {
   border: none;
   padding: 20px;
 }
+
+pre {
+  background-color: #ccf5f5;
+  padding: 1rem;
+  border: 1px solid #aaffff;
+  overflow-x: auto;
+}
+
+code {
+  font-size: 1rem;
+}

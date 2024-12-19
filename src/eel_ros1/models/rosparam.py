@@ -2,8 +2,6 @@ import rospy
 import time
 import eel
 import threading
-from eel_ros1.models.ros_service import Config
-
 GET_PARAM_INTERVAL = 5
 
 PARAM_TYPES = {
@@ -31,8 +29,7 @@ def getparam_loop():
 
                 # 値をUIに渡す
                 eel.updateParam(key, value["type"], new_value)
-                if Config["log_level"] == "debug":
-                    print("[CA] Rosparam updated:", key, value["type"], new_value)
+                print("[CA] Rosparam updated:", key, value["type"], new_value)
             except Exception as e:
                 print("[CA] Failed to get rosparam:", key, e.args)
 

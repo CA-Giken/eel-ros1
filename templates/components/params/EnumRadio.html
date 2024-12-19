@@ -1,18 +1,8 @@
-<!-- 
-  Usage: 
-    name: "/eel_paramtest/string"
-    map: 
-      - value: "1"
-        label: "One"
-      - value: "2"
-        label: "Two"
- -->
 {% set element_id = generate_id() %}
 <div id="{{element_id}}">
   {% for item in map %}
     <input
       class="rosparam"
-      data-rtype="String"
       type="radio"
       name="{{name}}"
       value="{{item['value']}}"

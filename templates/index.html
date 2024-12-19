@@ -28,62 +28,76 @@
     {% with name="/eel_subtest/bool" %}
       {% include "components/subscribers/Bool.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Bool.html") }}
+    </code></pre>
     <h3>/eel_subtest/int32</h3>
     {% with name="/eel_subtest/int32" %}
       {% include "components/subscribers/Int32.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Int32.html") }}
+    </code></pre>
     <h3>/eel_subtest/int64</h3>
     {% with name="/eel_subtest/int64" %}
       {% include "components/subscribers/Int64.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Int64.html") }}
+    </code></pre>
     <h3>/eel_subtest/float32</h3>
     {% with name="/eel_subtest/float32" %}
       {% include "components/subscribers/Float32.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Float32.html") }}
+    </code></pre>
     <h3>/eel_subtest/float64</h3>
     {% with name="/eel_subtest/float64" %}
       {% include "components/subscribers/Float64.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Float64.html") }}
+    </code></pre>
     <h3>/eel_subtest/string</h3>
     {% with name="/eel_subtest/string" %}
       {% include "components/subscribers/String.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/String.html") }}
+    </code></pre>
     <h3>/eel_subtest/transform</h3>
     {% with name="/eel_subtest/transform" %}
       {% include "components/subscribers/Transform.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Transform.html") }}
     <h3>/eel_subtest/pose</h3>
     {% with name="/eel_subtest/pose" %}
       {% include "components/subscribers/Pose.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Pose.html") }}
+    </code></pre>
     <h3>/eel_subtest/image</h3>
     {% with name="/eel_subtest/image" %}
       {% include "components/subscribers/Image.html" %}
     {% endwith %}
+    {{ include_code("components/subscribers/Image.html") }}
+    </code></pre>
   </div>
 </div>
 
 <div class="container">
   <div class="component">
     <a name="pubs"><h2>ROS Publishers</h2></a>
-    <div>
-      <h3>/eel_pubtest/bool</h3>
-      {% with name="/eel_pubtest/bool", value="True", label="Publish Bool" %}
-        {% include "components/publishers/Bool.html" %}
-      {% endwith %}
-    </div>
-    <div>
-      <h3>/eel_pubtest/string</h3>
-      {% with name="/eel_pubtest/string", value="test", label="Publish String" %}
-        {% include "components/publishers/String.html" %}
-      {% endwith %}
-    </div>
-    <div>
-      <h3>/eel_pubtest/int32</h3>
-      {% with name="/eel_pubtest/int32", value="123", label="Publish Int32" %}
-        {% include "components/publishers/Int32.html" %}
-      {% endwith %}
-    </div>
+    <h3>/eel_pubtest/bool</h3>
+    {% with name="/eel_pubtest/bool", value=True, label="Publish Bool" %}
+      {% include "components/publishers/Bool.html" %}
+    {% endwith %}
+    {{ include_code("components/publishers/Bool.html") }}
+    <h3>/eel_pubtest/string</h3>
+    {% with name="/eel_pubtest/string", value="test", label="Publish String" %}
+      {% include "components/publishers/String.html" %}
+    {% endwith %}
+    {{ include_code("components/publishers/String.html") }}
+    <h3>/eel_pubtest/int32</h3>
+    {% with name="/eel_pubtest/int32", value=123, label="Publish Int32" %}
+      {% include "components/publishers/Int32.html" %}
+    {% endwith %}
+    {{ include_code("components/publishers/Int32.html") }}
   </div>
 </div>
 <div class="container">
@@ -94,26 +108,32 @@
       {% with name="/eel_paramtest/bool" %}
         {% include "components/params/Bool.html" %}
       {% endwith %}
+      {{ include_code("components/params/Bool.html") }}
       <h3>/eel_paramtest/number</h3>
       {% with name="/eel_paramtest/number" %}
         {% include "components/params/Number.html" %}
       {% endwith %}
+      {{ include_code("components/params/Number.html") }}
       <h3>/eel_paramtest/string</h3>
       {% with name="/eel_paramtest/string" %}
         {% include "components/params/String.html" %}
       {% endwith %}
+      {{ include_code("components/params/String.html") }}
       <h3>/eel_paramtest/enum Radio</h3>
       {% with name="/eel_paramtest/enum", type="radio", map=[{"value": "1", "label": "ラベル1" }, {"value": "2", "label": "ラベル2"}] %}
         {% include "components/params/EnumRadio.html" %}
       {% endwith %}
+      {{ include_code("components/params/EnumRadio.html") }}
       <h3>/eel_paramtest/enum Select</h3>
       {% with name="/eel_paramtest/enum", type="select", map=[{"value": "1", "label": "ラベル1" }, {"value": "2", "label": "ラベル2"}] %}
         {% include "components/params/EnumSelect.html" %}
       {% endwith %}
+      {{ include_code("components/params/EnumSelect.html") }}
       <h3>/eel_paramtest/object Object</h3>
       {% with name="/eel_paramtest/object" %}
         {% include "components/params/Object.html" %}
       {% endwith %}
+      {{ include_code("components/params/Object.html") }}
     </div>
   </div>
 </div>

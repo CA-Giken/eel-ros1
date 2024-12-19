@@ -6,26 +6,46 @@ document.addEventListener("DOMContentLoaded", async () => {
    * Publisherの必須属性
    * - class="publish"
    * - name="[/topic_name]"
-   * - data-rtype="[MSG_TYPES]"
+   * - ext="ROS_MESSAGE"
    * - value="[value]"
    */
-  const publishButtons = document.getElementsByClassName("publish");
-  for (const btn of publishButtons) {
+  const publishes = document.getElementsByClassName("publish");
+  for (const pub of publishes) {
     /**
      * HTMLタグバリデータ
      */
-    console.assert(btn.tagName === "BUTTON", "PublisherはButtonエレメントにのみ限定する");
-    console.assert(btn.getAttribute("name") !== null, "Publisherのname属性が必要です.");
-    console.assert(btn.getAttribute("data-rtype") in MSG_TYPES, `Publisherのdata-rtypeが不正です. ${btn.getAttribute("data-rtype")}`);
-    if (btn.tagName !== "BUTTON") {
+    const name = pub.getAttribute("name");
+    console.assert(name, "Publisherのname属性が必要です");
+    const type = pub.getAttribute("m-type");
+    console.assert(type, `Publisherのext属性が必要です`);
+    console.assert(pub.tagName === "DIV", "PublisherはDIVタグである必要があります");
+    if (pub.tagName !== "DIV") {
       continue;
     }
+    const btn = pub.querySelector("button");
+    console.assert(btn, "Publisherはbuttonタグを含む必要があります");
+    const inputs = pub.querySelectorAll("input");
+    console.assert(inputs.length > 0, "Publisherはinputタグを含む必要があります");
+
 
     btn.addEventListener("click", async (e) => {
-      const name = e.currentTarget.getAttribute("name");
-      const type = MSG_TYPES[e.currentTarget.getAttribute("data-rtype")];
-      const value = e.currentTarget.getAttribute("value");
-
+      let value = {};
+      // inputタグのvalueを取得して辞書化
+      inputs.forEach((input) => {
+        const ext = input.getAttribute("ext");
+        if (!ext) return;
+        var type_asserted;
+        if(input.type == "checkbox"){
+          type_asserted = input.checked;
+        } else if(input.type == "number"){
+          type_asserted = Number(input.value);
+        } else if(input.type == "radio"){
+          type_asserted = Number(input.value);
+        } else {
+          type_asserted = input.value;
+        }
+        value = Utils.dictFullPathAdd(value, ext, type_asserted);
+      });
       const event = new CustomEvent(ROS_EVENTS.Publish, {
         detail: { name, type, value },
       });

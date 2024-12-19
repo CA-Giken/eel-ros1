@@ -1,3 +1,10 @@
-<button class="publish btn" name="{{name}}" data-rtype="Int32" value="{{value}}">
-  {{label}}
-</button>
+<div
+  class="publish"
+  name="{{name}}"
+  m-type="std_msgs.msg.Int32"
+>
+  <input type="number" ext=".data" value={{value}} style="display: none"/>
+  <button class="btn">
+    {{label}}
+  </button>
+</div>

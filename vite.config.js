@@ -36,9 +36,13 @@ const jsFiles = scanDirectory(jsDir);
 // importの順序を制御したい場合の設定
 const priorityFiles = [
   './const.js',
-  './common.js',
+  './utils.js',
+  './ros.js',
+
   // 他の優先ファイル
 ];
+
+
 
 // 優先ファイルを先頭に、それ以外のファイルをソートして追加
 const sortedFiles = [
@@ -48,6 +52,7 @@ const sortedFiles = [
 
 // import文の生成
 const imports = sortedFiles
+  .filter(file => !file.endsWith('auto-entry.js'))
   .map(file => `import '${file}';`)
   .join('\n');
 

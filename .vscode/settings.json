@@ -1,0 +1,10 @@
+{
+  "liveServer.settings.multiRootWorkspaceName": "tmc-scenario-editor",
+  "liveServer.settings.port": 5501,
+  "livePreview.defaultPreviewPath": "dist/web",
+  "livePreview.serverRoot": "dist/web",
+  "[html]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  }
+}

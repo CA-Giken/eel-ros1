@@ -1,7 +1,7 @@
 #
 # Jinja2のテンプレートタグ内で使用する関数群
 #
-from markupsafe import Markup
+from markupsafe import Markup, escape
 
 
 def generate_id():
@@ -41,3 +41,17 @@ def spread_attributes(options={}):
     HTML属性を展開する
     """
     return Markup(' '.join([f'{key}="{value}"' for key, value in options.items()]))
+
+def include_code(filename, env):
+    """
+    ファイルの内容を読み込み、HTMLエスケープしてpre/codeタグで囲む
+    """
+    try:
+        # FileSystemLoaderのget_sourceを使用してファイルを読み込む
+        source, _, _ = env.loader.get_source(env, filename)
+        # HTMLをエスケープ
+        escaped_content = escape(source)
+        return f'<pre><code>{escaped_content}</code></pre>'
+    except Exception as e:
+        print(e)
+        return f'[CA] Error reading {filename}: {str(e)}'

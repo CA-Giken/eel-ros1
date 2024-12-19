@@ -55,9 +55,11 @@ class DOMUpdateHelper {
   updateDivElement(element, value) {
     element.setAttribute("data-value", value);
 
-    const inputs = element.querySelectorAll("input");
-    for (const input of inputs) {
-      updateInputElement(input, Utils.EvalGetValue(value, input.getAttribute("data-key")));
+    const children = element.children;
+    for (const child of children) {
+      // ext属性を持つ子要素のみ再帰探索
+      if (!child.hasAttribute("ext")) continue;
+      updateElement(child, Utils.EvalGetValue(value, child.getAttribute("ext")));
     }
   }
 
