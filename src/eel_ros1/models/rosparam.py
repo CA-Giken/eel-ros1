@@ -28,7 +28,7 @@ def getparam_loop():
                 rosparams[key]["value"] = new_value
 
                 # 値をUIに渡す
-                eel.updateParam(key, value["type"], new_value)
+                eel.updateParam(key, new_value)
                 print("[CA] Rosparam updated:", key, value["type"], new_value)
             except Exception as e:
                 print("[CA] Failed to get rosparam:", key, e.args)

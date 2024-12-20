@@ -47,9 +47,9 @@ document.addEventListener("DOMContentLoaded", async () => {
    */
   document.addEventListener(ROS_EVENTS.SubscribedValue, async (e) => {
     const { name, value } = e.detail;
-    const topicElements = document.getElementsByName(name);
-    topicElements.forEach((element) => {
-      domUpdateHelper.executeCallbacks(element, { value });
-    });
+    const topicElements = document.querySelectorAll(`[name="${name}"][class="subscribe"]`); 
+    for(var i = 0; i < topicElements.length; i++) {
+      domUpdateHelper.executeCallbacks(topicElements[i], { value });
+    };
   });
 });

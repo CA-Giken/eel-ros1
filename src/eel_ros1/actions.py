@@ -112,7 +112,6 @@ def ros_register_param(param_name: str):
 
     eel.updateParam(
         param_name,
-        rosparams[param_name]["type"],
         rosparams[param_name]["value"]
     )
 

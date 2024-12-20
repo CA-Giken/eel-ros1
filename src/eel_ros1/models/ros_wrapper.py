@@ -67,7 +67,19 @@ def from_msg(msg: TypeVar):
     """
     if isinstance(msg, Image):
         return from_image_msg(msg)
-    return msg.__dict__
+
+    def message_to_dict(msg):
+        msg_dict = {}
+        for slot in msg.__slots__:
+            attr = getattr(msg, slot)
+            if hasattr(attr, '__slots__'):
+                msg_dict[slot] = message_to_dict(attr)
+            else:
+                msg_dict[slot] = attr
+        return msg_dict
+
+    msg_send = message_to_dict(msg)
+    return msg_send
 
 
 def to_image_msg(value: dict) -> Image:

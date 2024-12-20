@@ -37,17 +37,22 @@ const jsFiles = scanDirectory(jsDir);
 const priorityFiles = [
   './const.js',
   './utils.js',
-  './ros.js',
 
   // 他の優先ファイル
 ];
 
+// ignoreFiles に含まれるファイルは除外
+const ignoreFiles = [
+  "./ros.js"
+]
 
 
 // 優先ファイルを先頭に、それ以外のファイルをソートして追加
 const sortedFiles = [
   ...priorityFiles.filter(file => jsFiles.includes(file)),
-  ...jsFiles.filter(file => !priorityFiles.includes(file)).sort()
+  ...jsFiles.filter(file => !priorityFiles.includes(file))
+    .filter(file => !ignoreFiles.includes(file))
+    .sort()
 ];
 
 // import文の生成

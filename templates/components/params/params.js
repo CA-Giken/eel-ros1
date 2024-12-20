@@ -129,10 +129,11 @@ document.addEventListener("DOMContentLoaded", async () => {
    * DOM更新イベントの登録
    */
   document.addEventListener(ROS_EVENTS.ParamUpdated, async (e) => {
-    const { name, type, value } = e.detail;
-    const paramElements = document.getElementsByName(name);
-    paramElements.forEach((element) => {
-      domUpdateHelper.executeCallbacks(element, { type, value });
-    });
+    const { name, value } = e.detail;
+
+    const paramElements = document.querySelectorAll(`[name="${name}"][class="rosparam"]`); 
+    for(var i = 0; i < paramElements.length; i++) {
+      domUpdateHelper.executeCallbacks(paramElements[i], { value });
+    }
   });
 });

@@ -74,6 +74,8 @@ def bundle(root, template = "templates", dist = "dist/web"):
         #     copy_js(file)
         if file.endswith('.mock.js'): # パッケージのモックファイルはそのままコピー
             copy_js(file)
+        if file.endswith("ros.js"): # Eel側へ関数公開がうまくいかないので、これだけ切り出し
+            copy_js(file)
         if file.endswith('.css'):
             copy_css(file)
         if file.endswith('.csv'):
