@@ -1,13 +1,348 @@
 :root {
   --text-color: #090909;
-  font-size: 16px;
+
+  /** ================================
+  * Color Palette
+  * https://design.digital.go.jp/foundations/color/
+  * ================================ */
+
+  /** Key Colors */
+  --primary-color: rgb(199, 71, 0);
+  --secondary-color: rgb(251, 91, 1);
+  --tertiary-color: rgb(139, 50, 0);
+
+  /** Background Colors */
+  --background-primary: #ffffff;
+  --background-secondary: var(--gray-100);
+
+  /** Grayscale */
+  --gray-50: #f2f2f2;
+  --gray-100: #e6e6e6;
+  --gray-200: #cccccc;
+  --gray-300: #b3b3b3;
+  --gray-400: #999999;
+  --gray-420: #949494; /* Non-text contrasted requirement 3:1 to white background*/
+  --gray-500: #7f7f7f;
+  --gray-536: #767676; /* Text contrasted requirement 4.5:1 to both white and black background */
+  --gray-600: #666666; /* Non-text contrasted requirement 3:1 to black background */
+  --gray-700: #4d4d4d;
+  --gray-800: #333333;
+  --gray-900: #1a1a1a;
+
+  /** Primitive Colors */
+  --white: #ffffff;
+  --sea-1200: #00004f;
+  --sea-1100: #000060;
+  --sea-1000: #000071;
+  --sea-900: #000082;
+  --sea-800: #0017c1;
+  --sea-700: #0031db;
+  --sea-600: #1a3ee8;
+  --sea-500: #264af4;
+  --sea-400: #4979f5;
+  --sea-300: #7096f8;
+  --sea-200: #9db7f9;
+  --sea-100: #c5d7fb;
+  --sea-50: #e8f1fe;
+  --sea-800-d13p: #000082;
+  --sea-300-d10p: #4979f5;
+  --forest-1200: #032213;
+  --forest-1100: #08351f;
+  --forest-1000: #0c472a;
+  --forest-900: #115a36;
+  --forest-800: #197a4b;
+  --forest-700: #1d8b56;
+  --forest-600: #259d63;
+  --forest-500: #2cac6e;
+  --forest-400: #51b883;
+  --forest-300: #71c598;
+  --forest-200: #9bd4b5;
+  --forest-100: #c2e5d1;
+  --forest-50: #e6f5ec;
+  --wood-1200: #662e00;
+  --wood-1100: #8e3b00;
+  --wood-1000: #9c4600;
+  --wood-900: #b65200;
+  --wood-800: #c16800;
+  --wood-700: #c87504;
+  --wood-600: #cd820a;
+  --wood-500: #d18d0f;
+  --wood-400: #d69c2b;
+  --wood-300: #dcac4d;
+  --wood-200: #e1c383;
+  --wood-100: #e7d8b9;
+  --wood-50: #f3eee5;
+  --sun-1200: #640101;
+  --sun-1100: #890101;
+  --sun-1000: #af0000;
+  --sun-900: #d50000;
+  --sun-800: #ec0000;
+  --sun-700: #fa1606;
+  --sun-600: #ff220d;
+  --sun-500: #ff4b36;
+  --sun-400: #ff5838;
+  --sun-300: #ff7b5c;
+  --sun-200: #ffa28b;
+  --sun-100: #ffc8b8;
+  --sun-50: #ffe7e6;
+
+  /** Functional Colors */
+  --button-color: var(--primary-color);
+  --button-color-hover: var(--tertiary-color);
+  --button-color-active: var(--secondary-color);
+  --button-color-disabled: var(--gray-700);
+  --button-color-text: var(--gray-50);
+
+  /** Accent Colors */
+  --accent-color: rgb(0, 123, 255);
+
+  /** Semantic Colors */
+  --text-light-body: var(--gray-900);
+  --text-light-description: var(--gray-700);
+  --text-light-place-holder: var(--gray-536);
+  --text-light-on-fill: var(--white);
+  --text-light-link: var(--sea-800);
+  --text-light-hover: var(--sea-900);
+  --text-light-active: var(--sea-900);
+  --text-light-visited: var(--sea-900);
+  --text-light-alert: var(--sun-800);
+  --text-light-disabled: var(--gray-500);
+  --text-dark-body: var(--white);
+  --text-dark-description: var(--gray-400);
+  --text-dark-place-holder: var(--gray-500);
+  --text-dark-on-fill: var(--white);
+  --text-dark-link: var(--sea-300);
+  --text-dark-hover: var(--sea-200);
+  --text-dark-active: var(--sea-200);
+  --text-dark-visited: var(--sea-200);
+  --text-dark-alert: var(--sun-500);
+  --text-dark-disabled: var(--gray-600);
+  --background-light-primary: var(--white);
+  --background-light-secondary: var(--gray-100);
+  --background-light-tertiary: var(--gray-50);
+  --background-dark-primary: var(--gray-900);
+  --background-dark-secondary: var(--gray-700);
+  --background-dark-tertiary: var(--gray-800);
+  --border-light-field: var(--gray-900);
+  --border-light-divider: var(--gray-300);
+  --border-light-focused: var(--wood-600);
+  --border-light-selected: var(--sea-800);
+  --border-light-alert: var(--sun-800);
+  --border-light-disabled: var(--gray-300);
+  --border-dark-field: var(--white);
+  --border-dark-divider: var(--gray-700);
+  --border-dark-focused: var(--wood-600);
+  --border-dark-selected: var(--sea-300);
+  --border-dark-alert: var(--sun-500);
+  --border-dark-disabled: var(--gray-300);
+  --icon-light-label: var(--gray-900);
+  --icon-light-active: var(--sea-800);
+  --icon-light-alert: var(--sun-800);
+  --icon-light-disabled: var(--gray-500);
+  --icon-dark-label: var(--white);
+  --icon-dark-active: var(--sea-300);
+  --icon-dark-alert: var(--sun-500);
+  --icon-dark-disabled: var(--gray-600);
+  --status-light-success: var(--forest-600);
+  --status-light-alert: var(--sun-800);
+  --status-light-warning: var(--wood-800);
+  --status-dark-sucess: var(--forest-600);
+  --status-dark-alert: var(--sun-500);
+  --status-dark-warning: var(--wood-500);
+  --button-light-normal: var(--sea-800);
+  --button-light-hover: var(--sea-800-d13p);
+  --button-light-active: var(--sea-800-d13p);
+  --button-light-disabled-bg: var(--gray-500);
+  --button-dark-normal: var(--sea-300);
+  --button-dark-hover: var(--sea-300-d10p);
+  --button-dark-active: var(--sea-300-d10p);
+  --button-dark-disabled: var(--gray-500);
+  --chart-light-primary: var(--sea-800);
+  --chart-light-secondary: var(--sea-400);
+  --chart-dark-primary: var(--sea-100);
+  --chart-dark-secondary: var(--sea-300);
+
+  /**
+  * ================================
+  * Spacing
+  * ================================ */
+  --spacing-0: 0;
+  --spacing-1: 0.5rem;
+  --spacing-2: 1.5rem;
+  --spacing-3: 4rem;
+
+  /**
+  * ================================
+  * Elevations
+  * ================================ */
+  --elevation-0: 0 0 0 0 rgba(0, 0, 0, 0.1);
+  --elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  --elevation-overlay: 0 0 0 1000px rgba(0, 0, 0, 0.5);
 }
 
+/** Typography */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04rem;
+  color: var(--text-light-body);
+}
+
+a {
+  color: var(--text-light-link)
+}
+
+a:hover {
+  color: var(--text-light-hover)
+}
+
+a:active {
+  color: var(--text-light-active)
+}
+
+a:visited {
+  color: var(--text-light-visited)
+}
+
+h1 {
+  font-size: 2rem;
+  line-height: 2.8rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 2.1rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1rem;
+  line-height: 1.4rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 0.875rem;
+  line-height: 1.2rem;
+  font-weight: 700;
+}
+
+/** Typography presets */
+.dsp-48n-140 { /** Display 48px, 1.4rem */
+  font-size: 3rem;
+  line-height: 4.2rem;
+  font-weight: 700;
+}
+
+.std-16n-170 { /** Standard 16px 1.7rem: FOR DESCRIPTION */
+  font-size: 1rem;
+  line-height: 1.7rem;
+  font-weight: 400;
+}
+
+.std-16b-170 { /** Standard 16px Bold 1.7rem: FOR DESCRIPTION HEADER */
+  font-size: 1rem;
+  line-height: 1.7rem;
+  font-weight: 700;
+}
+
+.dns-16b-120 { /** Dense 16px Bold 1.2rem: FOR MENU HEADER & CATEGORY */
+  font-size: 1rem;
+  line-height: 1.2rem;
+  font-weight: 700;
+}
+
+.dns-14b-120 { /** Dense 14px Bold 1.2rem: FOR DATA HEADER */
+  font-size: 0.875rem;
+  line-height: 1.2rem;
+  font-weight: 700;
+}
+
+.dns-16n-120 { /** Dense 16px Normal 1.2rem: FOR MENU */
+  font-size: 1rem;
+  line-height: 1.2rem;
+  font-weight: 400;
+}
+
+.dns-14n-120 { /** Dense 14px Normal 1.2rem: FOR DATA */
+  font-size: 0.875rem;
+  line-height: 1.2rem;
+  font-weight: 400;
+}
+
+.oln-16b-100 { /** Oneline 16px Bold 1.0rem: FOR UI */
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 700;
+}
+
+.oln-16n-100 { /** Oneline 16px Normal 1.0rem: FOR UI */
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 400;
+}
+
+.mono-16b-150 { /** Monospace 16px Bold 1.5rem: FOR CODE SNIPPET */
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+}
+
+.mono-16n-150 { /** Monospace 16px Bold 1.5rem: FOR CODE SNIPPET */
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+}
+
+/** Buttons */
+button {
+  cursor: pointer;
+}
+
+button.large {
+  min-width: 136px;
+  min-height: 56px;
+}
+
+button.medium {
+  min-width: 96px;
+  min-height: 48px;
+}
+
+button.primary { /** Only one in a page　*/
+  background-color: var(--button-color);
+  color: var(--button-color-text);
+}
+button.primary:hover {
+  background-color: var(--button-color-hover);
+}
+button.primary:active {
+  background-color: var(--button-color-active);
+}
+button.primary:disabled {
+  background-color: var(--button-color-disabled);
+}
+
+button.secondary {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+}
+
+button.tertiary {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  color: var(--button-color);
+  text-decoration: underline;
 }
 
 header {
@@ -80,15 +415,6 @@ section {
   margin-bottom: 2rem;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .sub-input {
   min-width: 128px;
   min-height: 32px;
@@ -130,8 +456,4 @@ pre {
   padding: 1rem;
   border: 1px solid #aaffff;
   overflow-x: auto;
-}
-
-code {
-  font-size: 1rem;
 }

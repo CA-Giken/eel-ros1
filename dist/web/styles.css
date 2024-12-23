@@ -1,13 +1,198 @@
 :root {
   --text-color: #090909;
-  font-size: 16px;
+
+  /** ================================
+  * Color Palette
+  * https://design.digital.go.jp/foundations/color/
+  * ================================ */
+
+  /** Key Colors */
+  --primary-color: rgb(199, 71, 0);
+  --secondary-color: rgb(251, 91, 1);
+  --tertiary-color: rgb(139, 50, 0);
+
+  /** Background Colors */
+  --background-primary: #ffffff;
+  --background-secondary: var(--gray-100);
+
+  /** Grayscale */
+  --gray-50: #f2f2f2;
+  --gray-100: #e6e6e6;
+  --gray-200: #cccccc;
+  --gray-300: #b3b3b3;
+  --gray-400: #999999;
+  --gray-420: #949494; /* Non-text contrasted requirement 3:1 to white background*/
+  --gray-500: #7f7f7f;
+  --gray-536: #767676; /* Text contrasted requirement 4.5:1 to both white and black background */
+  --gray-600: #666666; /* Non-text contrasted requirement 3:1 to black background */
+  --gray-700: #4d4d4d;
+  --gray-800: #333333;
+  --gray-900: #1a1a1a;
+
+  /** Functional Colors */
+  --button-color: var(--primary-color);
+  --button-color-hover: var(--tertiary-color);
+  --button-color-active: var(--secondary-color);
+  --button-color-disabled: var(--gray-700);
+  --button-color-text: var(--gray-50);
+
+  /** Accent Colors */
+  --accent-color: rgb(0, 123, 255);
+
+  /** Semantic Colors */
+  --success-color: rgb(0, 150, 66);
+  --warning-color: rgb(255, 141, 0);
+  --error-color: rgb(220, 53, 69);
+  --info-color: rgb(13, 110, 253);
+
+  /** Text Colors */
+  --text-color-primary: var(--gray-900);
+  --text-color-secondary: var(--gray-700);
+  --text-color-disabled: var(--gray-400);
+
+  /** Border Colors */
+  --border-color: var(--gray-200);
+
+  /**
+  * ================================
+  * Spacing
+  * ================================ */
+  --spacing-0: 0;
+  --spacing-1: 0.5rem;
+  --spacing-2: 1.5rem;
+  --spacing-3: 4rem;
+
+  /**
+  * ================================
+  * Elevations
+  * ================================ */
+  --elevation-0: 0 0 0 0 rgba(0, 0, 0, 0.1);
+  --elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  --elevation-overlay: 0 0 0 1000px rgba(0, 0, 0, 0.5);
 }
 
+/** Typography */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
   margin: 0;
   padding: 0;
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+/** Typography presets */
+.dsp-48n-140 {
+  font-size: 3rem;
+  line-height: 4.2rem;
+  font-weight: 700;
+}
+
+.std-16n-170 {
+  font-size: 1rem;
+  line-height: 1.7rem;
+  font-weight: 400;
+}
+
+.std-16b-170 {
+  font-size: 1rem;
+  line-height: 1.7rem;
+  font-weight: 700;
+}
+
+.dns-16b-120 {
+  font-size: 1rem;
+  line-height: 1.2rem;
+  font-weight: 700;
+}
+
+.dns-14b-120 {
+  font-size: 0.875rem;
+  line-height: 1.2rem;
+  font-weight: 700;
+}
+
+.dns-16n-120 {
+  font-size: 1rem;
+  line-height: 1.2rem;
+  font-weight: 400;
+}
+
+.dns-14n-120 {
+  font-size: 0.875rem;
+  line-height: 1.2rem;
+  font-weight: 400;
+}
+
+.oln-16b-100 {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 700;
+}
+
+.oln-16n-100 {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 400;
+}
+
+.mono-16b-150 {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+}
+
+.mono-16n-150 {
+  font-family: 'Noto Sans Mono', monospace;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+}
+
+/** Buttons */
+button {
+  cursor: pointer;
+}
+
+button.large {
+  min-width: 136px;
+  min-height: 56px;
+}
+
+button.medium {
+  min-width: 96px;
+  min-height: 48px;
+}
+
+button.primary { /** Only one in a page　*/
+  background-color: var(--button-color);
+  color: var(--button-color-text);
+}
+button.primary:hover {
+  background-color: var(--button-color-hover);
+}
+button.primary:active {
+  background-color: var(--button-color-active);
+}
+button.primary:disabled {
+  background-color: var(--button-color-disabled);
+}
+
+button.secondary {
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+}
+
+button.tertiary {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  color: var(--button-color);
+  text-decoration: underline;
 }
 
 header {
@@ -80,15 +265,6 @@ section {
   margin-bottom: 2rem;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .sub-input {
   min-width: 128px;
   min-height: 32px;
@@ -130,8 +306,4 @@ pre {
   padding: 1rem;
   border: 1px solid #aaffff;
   overflow-x: auto;
-}
-
-code {
-  font-size: 1rem;
 }
