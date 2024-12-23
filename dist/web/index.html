@@ -321,17 +321,17 @@
       <h3>/eel_paramtest/enum Radio</h3>
       
         
-<div id="3e4729ea-cf29-4931-8999-620cc1c3276f">
+<div id="b257f109-fef9-41aa-a17c-5b4a230e2c90">
   
     <input
       class="rosparam"
       type="radio"
       name="/eel_paramtest/enum"
       value="1"
-      id="3e4729ea-cf29-4931-8999-620cc1c3276f-1"
+      id="b257f109-fef9-41aa-a17c-5b4a230e2c90-1"
     />
     <label
-      for="3e4729ea-cf29-4931-8999-620cc1c3276f-1"
+      for="b257f109-fef9-41aa-a17c-5b4a230e2c90-1"
     >ラベル1</label>
   
     <input
@@ -339,10 +339,10 @@
       type="radio"
       name="/eel_paramtest/enum"
       value="2"
-      id="3e4729ea-cf29-4931-8999-620cc1c3276f-2"
+      id="b257f109-fef9-41aa-a17c-5b4a230e2c90-2"
     />
     <label
-      for="3e4729ea-cf29-4931-8999-620cc1c3276f-2"
+      for="b257f109-fef9-41aa-a17c-5b4a230e2c90-2"
     >ラベル2</label>
   
 </div>
@@ -368,7 +368,7 @@
 <select
   class="rosparam"
   name="/eel_paramtest/enum"
-  id="770a158e-6be3-4d8c-bc27-140ca80aa14d"
+  id="6aba2ca8-2b97-4136-8b7c-45a88dcb28f4"
   value=""
 >
   
@@ -410,14 +410,23 @@
 <div class="container">
   <div class="component">
     <a name="tabs"><h2>Tabs</h2></a>
-    <div class="tabs">
-      <button class="tab" onclick="openTab(event, 'tab1')">Tab 1</button>
-      <button class="tab" onclick="openTab(event, 'tab2')">Tab 2</button>
-      <button class="tab" onclick="openTab(event, 'tab3')">Tab 3</button>
-    </div>
-    <iframe class="tabcontent" id="tab1" src="/frame1.html" style="display: none"></iframe>
-    <iframe class="tabcontent" id="tab2" src="/frame2.html" style="display: none"></iframe>
-    <iframe class="tabcontent" id="tab3" src="/frame3.html" style="display: none"></iframe>
+    <nav>
+      <ul>
+        <li>
+          <a onclick="openTab(event, 'tab1')">Tab 1</a>
+        </li>
+        <li>
+          <a onclick="openTab(event, 'tab2')">Tab 2</a>
+        </li>
+        <li>
+          <a onclick="openTab(event, 'tab3')">Tab 3</a>
+        </li>
+      </ul>
+    </nav>
+    </nav>
+    <iframe id="tab1" src="/frame1.html" style="display: none"></iframe>
+    <iframe id="tab2" src="/frame2.html" style="display: none"></iframe>
+    <iframe id="tab3" src="/frame3.html" style="display: none"></iframe>
   </div>
 </div>
 <div class="container">
@@ -460,11 +469,22 @@ CSVデータからdata-row-idに一致する行を取得し、
 テキスト表示するコンポーネント
 -->
 <div class="description" data-event-name="UIDescription">
+  <h4 class="description-field" data-column-name="title"></h4>
+  <h4 class="description-field" data-column-name="category"></h4>
   <p class="description-field" data-column-name="id"></p>
-  <p class="description-field" data-column-name="title"></p>
-  <p class="description-field" data-column-name="category"></p>
   <p class="description-field" data-column-name="description"></p>
 </div>
+    <pre><code>&lt;!--
+detailにdata-row-idを含む特定のイベントをリッスンし、
+CSVデータからdata-row-idに一致する行を取得し、
+テキスト表示するコンポーネント
+--&gt;
+&lt;div class=&#34;description&#34; data-event-name=&#34;UIDescription&#34;&gt;
+  &lt;h4 class=&#34;description-field&#34; data-column-name=&#34;title&#34;&gt;&lt;/h4&gt;
+  &lt;h4 class=&#34;description-field&#34; data-column-name=&#34;category&#34;&gt;&lt;/h4&gt;
+  &lt;p class=&#34;description-field&#34; data-column-name=&#34;id&#34;&gt;&lt;/p&gt;
+  &lt;p class=&#34;description-field&#34; data-column-name=&#34;description&#34;&gt;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
   </div>
 </div>
 <script type="text/javascript">
