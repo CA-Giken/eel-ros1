@@ -11,3 +11,18 @@ eel_paramtest:
     key1: 1
     key2: 2
     key3: 3
+config:
+  cache:
+    - topic: /eel_cachetest/bool
+      m-type: std_msgs.msg.Bool
+    - topic: /eel_cachetest/bool
+      m-type: std_msgs.msg.Bool
+      to: /latest/camera/image
+    - topic: /eel_cachetest/image
+      m-type: sensor_msgs.msg.Image
+    - topic: /eel_cachetest/image
+      m-type: sensor_msgs.msg.Image
+      to: /latest/camera/image
+    - file: /eel_cachetest/image
+      m-type: sensor_msgs.msg.Image
+      to: /cache/camera/image

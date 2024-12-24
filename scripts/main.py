@@ -4,14 +4,13 @@
 import os
 import sys
 import eel
-from jinja2 import Environment, FileSystemLoader
 import rospkg
 import argparse
 import rospy
 
 # Actionsをインポートして、このファイルにバンドルする
 from eel_ros1.actions import *  # noqa: F403
-from eel_ros1.models import ros_service, rosparam # FIXME: おそらくros_serviceのインポートはここ必須
+from eel_ros1.models import rosparam # FIXME: おそらくros_serviceのインポートはここ必須
 
 PACKAGE_NAME = "eel_ros1"
 OPTIONS = {
