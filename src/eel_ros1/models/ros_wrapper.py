@@ -109,6 +109,6 @@ def from_image_msg(msg: Image) -> str:
     cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
     _, buffer = cv2.imencode('.jpg', cv_image)
     base64string = base64.b64encode(buffer).decode("utf-8")
-    msg_send["data"] = base64string
+    msg_send["data"] = "data:image/jpeg;base64," + base64string
     return msg_send
 
