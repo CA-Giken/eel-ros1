@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # Image型データのパブリッシュ(黒い画像データ)
-BYTES_DATA=$(python3 -c "import sys; sys.stdout.buffer.write(bytes([0] * (640 * 480 * 3)))")
+ENCODED_DATA=$(python3 -c '
+import base64
+dummy_data = bytes([0] * (640 * 480 * 3))
+encoded = base64.b64encode(dummy_data).decode()
+print(encoded)
+')
 
 rostopic pub -1 /eel_subtest/image sensor_msgs/Image "{
   header: {
@@ -14,5 +19,5 @@ rostopic pub -1 /eel_subtest/image sensor_msgs/Image "{
   encoding: 'rgb8',
   is_bigendian: 0,
   step: 1920,
-  data: ${BYTES_DATA}
+  data: '$(echo -n "$ENCODED_DATA" | base64 -d)'
 }"

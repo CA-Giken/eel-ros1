@@ -93,9 +93,22 @@ def to_image_msg(value: dict) -> Image:
     return image
 
 def from_image_msg(msg: Image) -> str:
+    def message_to_dict(msg):
+        msg_dict = {}
+        for slot in msg.__slots__:
+            attr = getattr(msg, slot)
+            if hasattr(attr, '__slots__'):
+                msg_dict[slot] = message_to_dict(attr)
+            else:
+                msg_dict[slot] = attr
+        return msg_dict
+
+    msg_send = message_to_dict(msg)
+
     bridge = CvBridge()
     cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
     _, buffer = cv2.imencode('.jpg', cv_image)
     base64string = base64.b64encode(buffer).decode("utf-8")
-    return { base64string }
+    msg_send["data"] = base64string
+    return msg_send
 
