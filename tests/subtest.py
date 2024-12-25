@@ -6,6 +6,9 @@ import numpy as np
 from std_msgs.msg import Bool, Int32, Int64, Float32, Float64, String
 from geometry_msgs.msg import Transform, Pose
 from sensor_msgs.msg import Image
+import cv2
+from cv_bridge import CvBridge
+import rospkg
 
 Config={}
 Param={}
@@ -31,14 +34,12 @@ image_pub = rospy.Publisher('/eel_subtest/image', Image, queue_size=1)
 
 try:
     # 画像メッセージの作成
-    img_msg = Image()
-    img_msg.header.frame_id = "camera"
-    img_msg.height = 480
-    img_msg.width = 640
-    img_msg.encoding = "rgb8"
-    img_msg.is_bigendian = 0
-    img_msg.step = 1920
-    img_msg.data = bytes([0] * (640 * 480 * 3))
+    rospack = rospkg.RosPack()
+    dirpath = rospack.get_path("eel_ros1")
+    test_img_path = dirpath + "/tests/test.png"
+    img = cv2.imread(test_img_path)
+    bridge = CvBridge()
+    img_msg = bridge.cv2_to_imgmsg(img, encoding="bgr8")
 
     # Transformメッセージの作成
     transform_msg = Transform()
