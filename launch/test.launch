@@ -1,0 +1,3 @@
+<launch>
+    <node name="eel_test" pkg="eel_ros1" type="subtest.py" output="screen" />
+</launch>
