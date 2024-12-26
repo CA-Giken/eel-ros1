@@ -45,6 +45,7 @@ class DOMUpdateHelper {
         break;
       case "IMG":
         DOMUpdateHelper.updateImageElement(element, value);
+        break;
       default:
         throw new Error(`Unsupported element tag: ${element.tagName}`);
     }
