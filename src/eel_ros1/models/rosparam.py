@@ -1,7 +1,6 @@
 import rospy
-import time
 import eel
-import threading
+
 GET_PARAM_INTERVAL = 5
 
 PARAM_TYPES = {
@@ -14,12 +13,8 @@ PARAM_TYPES = {
 
 rosparams = {} # { "/param_name": { "type": PARAM_TYPES, "value": value } }
 
-getparam_loop_running = False
-loop_thread = None
-
 def getparam_loop():
-    global getparam_loop_running, rosparams
-    while getparam_loop_running:
+    while True:
         for key, value in rosparams.items():
             try:
                 new_value = rospy.get_param(key)
@@ -34,17 +29,4 @@ def getparam_loop():
                 print("[CA] Failed to get rosparam:", key, e.args)
 
         # ５秒ごとに定期取得
-        time.sleep(GET_PARAM_INTERVAL)
-
-def run_getparam_loop():
-    global getparam_loop_running, loop_thread
-    if not getparam_loop_running:
-        getparam_loop_running = True
-        loop_thread = threading.Thread(target=getparam_loop)
-        loop_thread.start()
-        print("[CA] Get rosparam loop has been started.")
-
-def break_getparam_loop():
-    global getparam_loop_running
-    getparam_loop_running = False
-    print("[CA] Get rosparam loop has been stopped.")
+        eel.sleep(GET_PARAM_INTERVAL)

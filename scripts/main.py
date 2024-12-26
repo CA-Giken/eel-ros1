@@ -18,7 +18,7 @@ OPTIONS = {
     "port": 8000,
     'cmdline_args': ["--no-sandbox"],
     'size': (800, 600),
-    # "block": False
+    "block": True
 }
 
 # Jinja2の設定
@@ -44,9 +44,7 @@ print("Starting Eel app...")
 print("  dist path: ", dist_path)
 print("  hosted at:", f"http://{OPTIONS['host']}:{OPTIONS['port']}")
 eel.init(dist_path)
-rosparam.run_getparam_loop()
+eel.spawn(rosparam.getparam_loop)
 eel.start('index.html', **OPTIONS)
 
-rosparam.break_getparam_loop()
-print("[CA] App quitted.")
-sys.exit()
+print("Eel app stopped.")
