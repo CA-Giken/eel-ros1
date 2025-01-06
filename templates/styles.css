@@ -583,7 +583,38 @@ nav ul li a:hover  {
   cursor: pointer;
 }
 
+/** Table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-x: auto;
+  display: block;
+}
 
+thead {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border-divider);
+}
+
+tbody {
+  background-color: var(--background-tertiary);
+  border: 1px solid var(--border-divider);
+}
+
+tbody tr:hover {
+  background-color: var(--background-secondary);
+}
+
+tbody tr:active {
+  background-color: var(--background-primary);
+}
+
+td {
+  padding: 0 0.5rem 0 0.5rem;
+}
 /** Semantic Elements */
 html {
   background-color: var(--background-primary);

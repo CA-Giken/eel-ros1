@@ -1,10 +1,44 @@
 {% extends "components/base.html" %}
 
 {% block title %}
-    Scenario Logger
+  ロガー
 {% endblock %}
 
 {% block content %}
 {% from "components/common/wrapper.html" import hover_wrapper %}
+
+<div class="container">
+  <div class="component">
+    <h1 class="dsp-48n-140">ロガー</h1>
+    {% with logs=[{
+      "date": "2024/12/25 15:00:00",
+      "success":"OK",
+      "log": "log-2024122415500000.log",
+      "thresholding_image": "thresholding-2024122415500000.png",
+      "hole_detection": "hole_detection-2024122415500000.png"
+    }, {
+      "date": "2024/12/25 15:00:00",
+      "success":"OK",
+      "log": "log-2024122415500000.log",
+      "thresholding_image": "thresholding-2024122415500000.png",
+      "hole_detection": "hole_detection-2024122415500000.png"
+    }, {
+      "date": "2024/12/25 15:00:00",
+      "success":"OK",
+      "log": "log-2024122415500000.log",
+      "thresholding_image": "thresholding-2024122415500000.png",
+      "hole_detection": "hole_detection-2024122415500000.png"
+    }, {
+      "date": "2024/12/25 15:00:00",
+      "success":"OK",
+      "log": "log-2024122415500000.log",
+      "thresholding_image": "thresholding-2024122415500000.png",
+      "hole_detection": "hole_detection-2024122415500000.png"
+    }],
+      labels=["時刻", "終了", "ログファイル", "二値化画像", "穴検出"] %}
+      {% include "components/common/log-table.html" %}
+    {% endwith %}
+  </div>
+</div>
 
 {% endblock %}

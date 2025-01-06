@@ -1,7 +1,13 @@
 // vite.config.js
 import { defineConfig } from 'vite'
-import { resolve, join } from 'path'
+import { resolve, join, extname } from 'path'
 import { readdirSync, writeFileSync, statSync } from 'fs'
+
+const TARGET_DIRECTORY = "templates"
+
+/**
+ * JSファイルのバンドル
+ **/
 
 function scanDirectory(dir) {
   let jsFiles = [];
@@ -21,7 +27,7 @@ function scanDirectory(dir) {
         continue;
       }
       // 相対パスに変換（jsDir からの相対パス）
-      const relativePath = fullPath.replace(resolve(__dirname, 'templates'), '.');
+      const relativePath = fullPath.replace(resolve(__dirname, TARGET_DIRECTORY), '.');
       jsFiles.push(relativePath);
     }
   }
@@ -30,7 +36,7 @@ function scanDirectory(dir) {
 }
 
 // エントリーポイントの生成
-const jsDir = resolve(__dirname, 'templates');
+const jsDir = resolve(__dirname, TARGET_DIRECTORY);
 const jsFiles = scanDirectory(jsDir);
 
 // importの順序を制御したい場合の設定
@@ -69,6 +75,7 @@ console.log(sortedFiles);
 const entryFile = resolve(__dirname, 'templates/auto-entry.js');
 writeFileSync(entryFile, imports);
 
+/** Config */
 export default defineConfig({
   build: {
     lib: {
@@ -79,8 +86,8 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        extend: true
-      }
+        extend: true,
+      },
     },
     outDir: 'dist/web',
     emptyOutDir: false,

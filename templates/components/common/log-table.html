@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      {% for label in labels %}
+      <td class="dns-14b-120" style="white-space: nowrap; overflow: hidden;">{{label}}</td>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for log in logs %}
+    <tr>
+      {% for k, v in log.items() %}
+        <td class="dns-14n-120" style="white-space: nowrap; overflow: hidden;">{{ v }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

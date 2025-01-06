@@ -1,3 +1,7 @@
+/**
+ * デスクトップアプリ用途なのでEval警告を無視する
+ */
+
 globalThis.Utils = {
   EvalGetValue: function(value, key) {
     let v;
