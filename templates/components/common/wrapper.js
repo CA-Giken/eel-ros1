@@ -4,15 +4,12 @@
 
 function dispatchWrappedEvent(originalEvent, customEventName) {
   // イベントターゲットがevent-wrapperクラスを持っている場合はイベント発行を行わない
-  const target = originalEvent.target;
-  if (target.classList.contains("event-wrapper")) {
-    return;
-  }
-  // // ラッパーコンポーネントに最も近いタグが持つdata-*を取得
-  // const isWrappedElement = target.closest(".event-wrapper") !== null;
-  // if (!isWrappedElement) return;
+  const target = originalEvent.currentTarget;
+  // ラッパーコンポーネントに最も近いタグが持つdata-*を取得
+  const wrappedElement = target.closest(".event-wrapper") !== null;
+  if (!wrappedElement) return;
 
-  const detail = { ...target.dataset };
+  const detail = { ...wrappedElement.dataset };
   const customEvent = new CustomEvent(customEventName, {
     bubbles: true,
     detail,
