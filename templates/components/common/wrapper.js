@@ -3,10 +3,22 @@
  */
 
 function dispatchWrappedEvent(originalEvent, customEventName) {
-  // イベントターゲットがevent-wrapperクラスを持っている場合はイベント発行を行わない
-  const target = originalEvent.currentTarget;
-  // ラッパーコンポーネントに最も近いタグが持つdata-*を取得
-  const wrappedElement = target.closest(".event-wrapper") !== null;
+  const currentTarget = originalEvent.currentTarget;
+
+  // 現在のターゲットから最も近い非event-wrapper要素を見つける関数
+  function findClosestNonWrapper(element) {
+    // 要素自体がevent-wrapperでない場合はその要素を返す
+    if (!element.classList.contains('event-wrapper')) {
+      return element;
+    }
+    // 子要素を走査
+    for (const child of element.children) {
+      const result = findClosestNonWrapper(child);
+      if (result) return result;
+    }
+    return null;
+  }
+  const wrappedElement = findClosestNonWrapper(currentTarget);
   if (!wrappedElement) return;
 
   const detail = { ...wrappedElement.dataset };
