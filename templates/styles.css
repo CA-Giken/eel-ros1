@@ -555,6 +555,8 @@ nav ul {
   justify-content: space-between;
   display: flex;
   flex-direction: row;
+  padding: 0;
+  margin: 0;
 }
 
 nav ul li {
