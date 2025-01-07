@@ -615,6 +615,32 @@ tbody tr:active {
 td {
   padding: 0 0.5rem 0 0.5rem;
 }
+
+/** icon */
+i {
+  display: block;
+  color: var(--icon-disabled);
+}
+
+i.active {
+  display: block;
+  color: var(--icon-active)
+}
+
+i.success-icon.active {
+  color: var(--status-success);
+}
+i.warning-icon.active {
+  color: var(--status-warning);
+} 
+i.error-icon.active {
+  color: var(--status-alert);
+}
+i.loading-icon.active {
+  color: var(--accent-color);
+}
+
+
 /** Semantic Elements */
 html {
   background-color: var(--background-primary);
@@ -666,4 +692,13 @@ pre {
   border: 1px solid var(--border-field);
   padding: var(--spacing-1);
   overflow: auto;
+}
+
+/** Specific */
+.click-wrapper {
+  cursor: pointer;
+}
+
+.event-wrapper {
+  display: contents;
 }
