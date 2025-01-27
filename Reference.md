@@ -87,21 +87,21 @@ class="rosparam"
 <tr><td rowspan="3">Any<br>except below<td rowspan="3">div<td><td>-<td>m-type={ros message type}<td>Yes
 <tr><td rowspan="2">Field<td rowspan="2">input<td>ext={name extension}<td>Yes
 <tr><td>format={format string}
-<tr><td>Image<td>img<td><td>-<td>m-type="sensor_msgs/Image"<td>Yes
+<tr><td>Image<td>img<td><td>-<td>m-type="sensor_msgs.msg.Image"<td>Yes
 </table>
 
 ### Example
 
 1. String型トピック/errorをFieldに表示
 ~~~
-<div class="subscribe" m-type="std_msgs/String" name="/error">
+<div class="subscribe" m-type="std_msgs.msg.String" name="/error">
   <input ext=".data" readonly />
 </div>
 ~~~
 
 2. TransformStamped型トピック/robot/toolの、frame名と直交座標を表示
 ~~~
-<div class="subscribe" m-type="geometry_msgs/TransformStamped" name="/robot/tool">
+<div class="subscribe" m-type="geometry_msgs.msg.TransformStamped" name="/robot/tool">
   <input ext=".header.frame_id" readonly />
   <input ext=".transform.translation.x" readonly />
   <input ext=".transform.translation.y" readonly />
@@ -123,7 +123,7 @@ class="rosparam"
 
 1. Bool型トピック/solve/execにTrue:Boolを発行
 ~~~
-<div class="publish" m-type="std_msgs/Bool" name="/solve/exec">
+<div class="publish" m-type="std_msgs.msg.Bool" name="/solve/exec">
   <input ext=".data" value="true" type="hidden" />
   <button>解析実行</button>
 </div>
@@ -131,7 +131,7 @@ class="rosparam"
 
 2. Int型トピック/solve/thresholdにキー入力数値:Int32を発行
 ~~~
-<div class="publish" m-type="std_msgs/Int32" name="/solve/threshold">
+<div class="publish" m-type="std_msgs.msg.Int32" name="/solve/threshold">
   <input ext=".data" type="number" />
   <button>整数値送信</button>
 </div>
@@ -139,7 +139,7 @@ class="rosparam"
 
 3. Transform型トピック/solve/tfにX座標のみキー入力数値、その他は固定値を発行
 ~~~
-<div class="publish" m-type="geometry_msgs/Transform" name="/solve/tf">
+<div class="publish" m-type="geometry_msgs.msg.Transform" name="/solve/tf">
   <input ext=".tranlation.x" type="number" />
   <input ext=".tranlation.y" value="1.0" type="hidden" />
   <input ext=".tranlation.z" value="2.0" type="hidden" />
@@ -153,7 +153,7 @@ class="rosparam"
 
 4. 定周期トピック発行(ボタンなし)
 ~~~
-<div class="publish" m-type="std_msgs/Bool" name="/solve/exec" rate="1">
+<div class="publish" m-type="std_msgs.msg.Bool" name="/solve/exec" rate="1">
   <input ext=".data" value="true" type="hidden" />
 </div>
 ~~~
@@ -171,7 +171,7 @@ Imageトピック/camera/imageを購読し、/cache/camera/imageにpublishする
 config:
   cache:
   - topic: /camera/image
-    m-type: sensor_msgs/Image
+    m-type: sensor_msgs.msg.Image
 ~~~
 
 2. デフォルトpublish名を変える  
@@ -184,7 +184,7 @@ config:
 config:
   cache:
   - topic: /camera/image
-    m-type: sensor_msgs/Image
+    m-type: sensor_msgs.msg.Image
     to: /latest/camera/image
 ~~~
 
@@ -194,7 +194,7 @@ Imageトピックの代わりにファイルを読み出してトピックとし
 config:
   cache:
   - file: /tmp/capt00.png
-    m-type: sensor_msgs/Image
+    m-type: sensor_msgs.msg.Image
     to: /cache/camera/image    #このときは省略できない
 ~~~
 
@@ -205,11 +205,11 @@ YAMLリスト形式にて、複数のキャシュを設定します(1個しか�
 config:
   cache:
   - topic: /camera/image
-    m-type: sensor_msgs/Image
+    m-type: sensor_msgs.msg.Image
   - topic: /camera/image
-    m-type: sensor_msgs/Image
+    m-type: sensor_msgs.msgs.Image
     to:  /latest/camera/image
   - file: /tmp/capt00.png
-    m-type: sensor_msgs/Image
+    m-type: sensor_msgs.msg.Image
     to: /cache/camera/image
 ~~~
