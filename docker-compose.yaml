@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  eel-ros1:
+    container_name: eel-ros1
+    hostname: eel-ros1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=:0
+    working_dir: /root
+    volumes:
+      - type: bind
+        source: ~/catkin_ws/src
+        target: /root/catkin_ws/src
+      - type: bind
+        source: ~/src
+        target: /root/src
+      - type: bind
+        source: ~/.ros/log
+        target: /root/.ros/log
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+    stdin_open: true
+    tty: true
+    ports:
+      - 11311:11311
+      - 8000:8000
+    network_mode: host

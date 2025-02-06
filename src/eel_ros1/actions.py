@@ -13,7 +13,7 @@ def health(value):
 
 @eel.expose
 def ros_publish(topic_name: str, typ: str, value: str, cache: bool = False):
-    assert topic_name.startswith('/'), f"[CA] Invalid topic name: {topic_name}. Must starts with '/"
+    assert topic_name.startswith('/'), f"[CA] Invalid topic name: {topic_name}. Must starts with '/'"
 
     msg_class = get_msg_class(typ)
 
@@ -35,7 +35,7 @@ def ros_publish(topic_name: str, typ: str, value: str, cache: bool = False):
 
 @eel.expose
 def ros_subscribe(topic_name: str, typ: str, cache: bool = False):
-    assert topic_name.startswith('/'), f"[CA] Invalid topic name: {topic_name}. Must starts with '/"
+    assert topic_name.startswith('/'), f"[CA] Invalid topic name: {topic_name}. Must starts with '/'"
     msg_class = get_msg_class(typ)
     def callback(msg):
         eel.updateSubscribedValue(topic_name, from_msg(msg))
