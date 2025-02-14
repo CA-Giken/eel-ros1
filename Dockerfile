@@ -4,13 +4,19 @@ WORKDIR /root
 
 # Install Eel and Chromium
 RUN pip install eel
-RUN wget http://ftp.jp.debian.org/debian/pool/main/c/chromium/chromium_133.0.6943.53-1_amd64.deb
 RUN apt-get update \
     && apt-get install -y libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libgbm-dev fonts-ipafont \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-# Install the downloaded package (WARNING: only for amd64. it does not work on arm64)
-RUN dpkg -i chromium_133.0.6943.53-1_amd64.deb
+
+RUN wget 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x869689FE09306074' \
+    -O '/etc/apt/trusted.gpg.d/phd-chromium.asc'
+RUN echo "deb https://freeshell.de/phd/chromium/focal/" \
+    | tee /etc/apt/sources.list.d/phd-chromium.list
+RUN apt-get update \
+    && apt-get install -y chromium \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY ./entrypoint.sh /root/entrypoint.sh
 

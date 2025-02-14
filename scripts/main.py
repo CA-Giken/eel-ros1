@@ -19,7 +19,7 @@ OPTIONS = {
     'cmdline_args': ["--no-sandbox"],
     'size': (800, 600),
     "block": True,
-    "mode": "chrome-app"
+    "mode": "chrome"
 }
 
 # Jinja2の設定
