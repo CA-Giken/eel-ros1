@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - DISPLAY=:0
-    working_dir: /root
+    working_dir: /root  
     volumes:
       - type: bind
         source: ~/catkin_ws/src

@@ -12,13 +12,14 @@ import rospy
 from eel_ros1.actions import *  # noqa: F403
 from eel_ros1.models import rosparam # FIXME: おそらくros_serviceのインポートはここ必須
 
-PACKAGE_NAME = "eel_ros1"
+PACKAGE_NAME = "eel-ros1"
 OPTIONS = {
     "host": "0.0.0.0",
     "port": 8000,
     'cmdline_args': ["--no-sandbox"],
     'size': (800, 600),
-    "block": True
+    "block": True,
+    "mode": "chrome-app"
 }
 
 # Jinja2の設定
