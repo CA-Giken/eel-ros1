@@ -10,7 +10,6 @@ setup_args = generate_distutils_setup(
     package_dir={
         '': 'src',
         'eel_ros1': 'src/eel_ros1',
-        'eel_bundler': 'src/eel_bundler'
     },
     scripts=['scripts/main.py', 'scripts/cache.py', 'tests/subtest.py'],
 )

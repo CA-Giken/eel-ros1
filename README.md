@@ -5,7 +5,7 @@ Well designed UI boilerplate with HTML+CSS for ROS1(Noetic), with Eel
 
 ```
 cd ~/catkin_ws/src
-git clone https://github.com/CA-Giken/eel-example.git
+git clone https://github.com/CA-Giken/eel-ros1.git
 cd ~/catkin_ws
 
 pip install eel[jinja2]
@@ -18,7 +18,13 @@ catkin build
 
 ```sh
 source ~/catkin_ws/devel/setup.bash
-roslaunch eel_example start.launch
+roslaunch eel-ros1 start.launch
+```
+
+## Build
+```sh
+npm run build
+./bundler
 ```
 
 ## Development (Launch file)
@@ -28,7 +34,7 @@ roslaunch eel_example start.launch
 
 ```
 <launch>
-    <node name="eel_ros1" pkg="eel_ros1" type="main.py" args="--html_dir=[templates_directory_path]" output="screen" />
+    <node name="eel-ros1" pkg="eel-ros1" type="main.py" args="--html_dir=[templates_directory_path]" output="screen" />
 </launch>
 ```
 
@@ -41,7 +47,7 @@ pubs = {} # { "/topic_name": { "publisher": rospy.Publisher, "last_value": value
 subs = {} # { "/topic_name": { "subscriber": rospy.Subscriber, "last_value": value } }
 ```
 
-ROS Params are stored in params dict at `src/eel_ros1_models/rosparam.py`.
+ROS Params are stored in params dict at `src/eel_ros1/models/rosparam.py`.
 
 ## Development (UI)
 

@@ -3,6 +3,7 @@ import './utils.js';
 import './components/common/description.js';
 import './components/common/validator.js';
 import './components/common/wrapper.js';
+import './components/eel-utils/filebrowser.js';
 import './components/params/params.js';
 import './components/publishers/publishers.js';
 import './components/subscribers/subscribers.js';

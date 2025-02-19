@@ -9,15 +9,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x869689FE09306074' \
-    -O '/etc/apt/trusted.gpg.d/phd-chromium.asc'
-RUN echo "deb https://freeshell.de/phd/chromium/focal/" \
-    | tee /etc/apt/sources.list.d/phd-chromium.list
-RUN apt-get update \
-    && apt-get install -y chromium \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY ./entrypoint.sh /root/entrypoint.sh
 
 # Temporarily install rovi for catkin build

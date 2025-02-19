@@ -10,6 +10,7 @@ import rospy
 
 # Actionsをインポートして、このファイルにバンドルする
 from eel_ros1.actions import *  # noqa: F403
+from eel_ros1.actions_util import *  # noqa: F403
 from eel_ros1.models import rosparam # FIXME: おそらくros_serviceのインポートはここ必須
 
 PACKAGE_NAME = "eel-ros1"
@@ -18,8 +19,7 @@ OPTIONS = {
     "port": 8000,
     'cmdline_args': ["--no-sandbox"],
     'size': (800, 600),
-    "block": True,
-    "mode": "chrome"
+    "block": True
 }
 
 # Jinja2の設定

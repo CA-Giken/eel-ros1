@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>
-    Frame2
+    ROS EEL Example
 </title>
     <link rel="stylesheet" type="text/css" href="/styles.css" />
     <!-- 外部パッケージ群 start -->
@@ -24,17 +24,36 @@
     </nav>
 </header>
     
-    <h2>Bool</h2>
-    <h3>/eel_subtest/frame2/bool</h3>
+
+<div class="container">
+  <div class="component">
+    <h1 class="dsp-48n-140">EEL Utilities</h1>
+    <p>
+      Utilities for EEL.
+    </p>
+    <ul>
+      <li class="dns-16n-120"><a href="#filebrowser">File Browser</a></li>
+    </ul>
+  </div>
+</div>
+<div class="container">
+  <div class="component">
+    <a name="filebrowser"><h2>File Browser</h2></a>
+    <p>
+      File browser is a component that allows you to select a file from the file system.
+    </p>
     
-      <div
-  class="subscribe"
-  name="/eel_subtest/frame2/bool"
-  m-type="std_msgs.msg.Bool"
->
-  <input type="text" ext=".data" readonly />
+      <div class="filebrowser">
+  <button>Browse...</button>
+  <input type="text" />
 </div>
     
+    <pre><code>&lt;div class=&#34;filebrowser&#34;&gt;
+  &lt;button&gt;Browse...&lt;/button&gt;
+  &lt;input type=&#34;text&#34; /&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+</div>
 
   </body>
 </html>
