@@ -1,0 +1,5 @@
+<launch>
+    <node name="load_params" pkg="eel-ros1" type="load_config.sh" args="eel-ros1" output="screen" />
+    <node name="eel_ros1" pkg="eel-ros1" type="react.py" output="screen" />
+    <node name="eel_cache" pkg="eel-ros1" type="cache.py" output="screen" />
+</launch>
