@@ -9,8 +9,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./entrypoint.sh /root/entrypoint.sh
-
 # Temporarily install rovi for catkin build
 # Rovi setup(Aravis)
 ENV LIBGL_ALWAYS_SOFTWARE=1
@@ -26,4 +24,5 @@ RUN cd aravis-0.6.0 && ./configure && make && make install
 # Rovi_industrial setup
 RUN pip install git+https://github.com/UniversalRobots/RTDE_Python_Client_Library.git
 
-# ENTRYPOINT ["/bin/bash", "-c", "/root/entrypoint.sh"]
+COPY ./entrypoint.sh /root/entrypoint.sh
+ENTRYPOINT ["/bin/bash", "-c", "/root/entrypoint.sh"]

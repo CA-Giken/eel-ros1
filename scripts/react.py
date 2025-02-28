@@ -47,7 +47,6 @@ if args.dev:
     OPTIONS["mode"] = None
     PAGE = { "port": 3000 }
 
-
 ##### Mainブロック
 rospy.init_node(PACKAGE_NAME, anonymous = True)
 dist_path = os.path.join(abs_path, DIRECTORY)
