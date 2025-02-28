@@ -11,7 +11,7 @@ setup_args = generate_distutils_setup(
         '': 'src',
         'eel_ros1': 'src/eel_ros1',
     },
-    scripts=['scripts/main.py', 'scripts/cache.py', 'tests/subtest.py'],
+    scripts=['scripts/main.py', 'scripts/react.py','scripts/cache.py', 'tests/subtest.py'],
 )
 
 setup(**setup_args)

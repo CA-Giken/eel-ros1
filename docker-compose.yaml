@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - DISPLAY=:0
-    working_dir: /root  
+    working_dir: /root
     volumes:
       - type: bind
         source: ~/catkin_ws/src
@@ -28,4 +28,4 @@ services:
     ports:
       - 11311:11311
       - 8000:8000
-    network_mode: host
+      - 3000:3000
